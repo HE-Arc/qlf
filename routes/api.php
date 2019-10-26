@@ -16,13 +16,6 @@ use App\User;
 |
 */
 
-//all users
-//Route::middleware('auth:api')->get('/user', function () {
-Route::get('/users', function () {
-    return UserResource::collection(User::all());
-});
-
-//single user
 Route::get('/user', function () {
     return new UserResource(User::find(1));
 });

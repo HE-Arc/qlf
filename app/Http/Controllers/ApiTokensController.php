@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-/**
- * Not used for now since hash is set to false in config/auth.php.
- */
 class ApiTokensController extends Controller
 {
     /**
