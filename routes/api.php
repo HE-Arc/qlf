@@ -20,10 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //passport
 
-Route::post('login', 'PassportController@login');
-Route::post('register', 'PassportController@register');
+Route::post('register', 'Api\Auth\RegisterController@register');
+Route::post('login', 'Api\Auth\LoginController@login');
+Route::post('refresh', 'Api\Auth\LoginController@refresh');
  
-Route::middleware('auth:api')->group(function () {
-    Route::get('user', 'PassportController@details');
-    Route::resource('products', 'ProductController');
+Route::middleware('auth:api')->group(function() {
+    Route::post('logout', 'Api\Auth\LoginController@logout');
+
+    Route::get('games', 'Api\GameexampleController@index'); //only for example purpose, to be deleted
 });

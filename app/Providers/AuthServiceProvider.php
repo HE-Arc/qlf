@@ -28,6 +28,11 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::routes();
 
-        Passport::personalAccessClientId('client-id');
+        
+        /* //If we want to change expiration delay
+        Passport::tokensExpireIn(now()->addDays(15));
+
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+        */
     }
 }

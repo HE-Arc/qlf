@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\Gameexample;
 
 class User extends Authenticatable
 {
@@ -37,4 +38,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * return all Gameexamples from this user
+     * This is an example class
+     */
+    public function gameexamples(){
+        return $this->hasMany(Gameexample::class); 
+    }
+
 }
