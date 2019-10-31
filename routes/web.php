@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('gamesheet', 'GamesheetController');
+
+Route::get('frontend', function() {
+    return view('frontend');
+});
