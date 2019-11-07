@@ -17,34 +17,42 @@
         <header class="header">
             <div class="navbar-fixed">
                 <nav class="nav">
-                    <div class="nav-wrapper">
+                    <div class="nav-wrapper teal darken-3">
                         <a href="#" class="brand-logo left">qlf</a>
-                        <ul class="right">
+                        <!--ul class="right">
                             <li><a href="#"><i class="material-icons">create</i></a></li>
                             <li><a href="#"><i class="material-icons">power_settings_new</i></a></li>
-                        </ul>
+                        </ul-->
                     </div>
                 </nav>
             </div>
         </header>
 
-        <main class="main">
+        <main class="main grey darken-3 white-text">
 
             <div class="tabs-content carousel carousel-slider">
-                <div class="carousel-item blue" id="tab-live"></div>
-                <div class="carousel-item red" id="tab-games"></div>
-                <div class="carousel-item green" id="tab-market"></div>
-                <div class="carousel-item yellow" id="tab-settings"></div>
+                <div class="carousel-item" id="tab-live">
+                    @include('partials.tabs.live')
+                </div>
+                <div class="carousel-item" id="tab-games">
+                    @include('partials.tabs.games')
+                </div>
+                <div class="carousel-item" id="tab-market">
+                    @include('partials.tabs.market')
+                </div>
+                <div class="carousel-item" id="tab-settings">
+                    @include('partials.tabs.settings')
+                </div>
             </div>
 
         </main>
 
         <footer class="footer">
-            <ul id="app-tabs-swipe" class="tabs">
-                <li class="tab"><a href="#tab-live">Live</a></li>
-                <li class="tab"><a href="#tab-games" class="active">Games</a></li>
-                <li class="tab"><a href="#tab-market">Market</a></li>
-                <li class="tab"><a href="#tab-settings">Settings</a></li>
+            <ul id="app-tabs-swipe" class="tabs teal darken-1">
+                <li class="tab"><a href="#tab-live" class="white-text">Live</a></li>
+                <li class="tab"><a href="#tab-games" class="white-text active">Games</a></li>
+                <li class="tab"><a href="#tab-market" class="white-text">Market</a></li>
+                <li class="tab"><a href="#tab-settings" class="white-text">Settings</a></li>
             </ul>
         </footer>
 
