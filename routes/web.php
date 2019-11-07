@@ -15,4 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//to be removed one day
 Route::resource('gamesheet', 'GamesheetController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
