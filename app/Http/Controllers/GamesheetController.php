@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Gamesheet;
 use Illuminate\Http\Request;
+use App\Http\Resources\User as UserResource;
 
 class GamesheetController extends Controller
 {
@@ -50,7 +51,9 @@ class GamesheetController extends Controller
      */
     public function show(Gamesheet $gamesheet)
     {
-        //
+        $g = Gamesheet::findOrFail($gamesheet);
+        
+        return new UserResource($gamesheet);
     }
 
     /**
@@ -85,5 +88,11 @@ class GamesheetController extends Controller
     public function destroy(Gamesheet $gamesheet)
     {
         //
+    }
+
+    public function getTemplate(Gamesheet $gamesheet)
+    {
+        $g = Gamesheet::findOrFail($gamesheet);
+        return new UserResource($gamesheet->template);
     }
 }
