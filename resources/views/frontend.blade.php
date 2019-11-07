@@ -19,10 +19,26 @@
                 <nav class="nav">
                     <div class="nav-wrapper teal darken-3">
                         <a href="#" class="brand-logo left">qlf</a>
-                        <!--ul class="right">
-                            <li><a href="#"><i class="material-icons">create</i></a></li>
-                            <li><a href="#"><i class="material-icons">power_settings_new</i></a></li>
-                        </ul-->
+
+                        <ul class="right">
+                            <li>
+                                <a href="#"><i class="material-icons">power_settings_new</i></a>
+                            </li>
+                            <li>
+                                <a class='dropdown-trigger' href='#' data-target='header-dropdown'><i class="material-icons">menu</i></a>
+                                <ul id='header-dropdown' class='dropdown-content'>
+                                    <li>
+                                        <a href="#!"><i class="material-icons">help</i>Help</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!"><i class="material-icons">info</i>About</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+
+
                     </div>
                 </nav>
             </div>

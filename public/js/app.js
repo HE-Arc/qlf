@@ -30,6 +30,13 @@ document.addEventListener('DOMContentLoaded', () =>
         swipeable: true,
     });
 
+    // Inits header dropdown
+    const headerDropdown = document.querySelector('.dropdown-trigger');
+    let mHeaderDropdown = M.Dropdown.init(headerDropdown, {
+        constrainWidth: false,
+        coverTrigger: false,
+    });
+
     // Inits main height
     appContainerHeight();
 
