@@ -1,4 +1,3 @@
-
 const $$ = {
     header: document.querySelector('.header'),
     main: document.querySelector('.main'),
