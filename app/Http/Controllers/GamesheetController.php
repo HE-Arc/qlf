@@ -16,6 +16,8 @@ class GamesheetController extends Controller
     {
         $gamesheets = Gamesheet::all();
 
+        return response()->json($gamesheets);
+
         return view('gamesheets.index', [
             'gamesheets' => $gamesheets,
         ]);
