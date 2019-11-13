@@ -15,8 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('gamesheet', 'GamesheetController');
-
 Route::get('frontend', function() {
     return view('frontend');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

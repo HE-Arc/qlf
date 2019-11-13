@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 
+use App\Http\Resources\User as UserResource;
+use App\User;
+use App\Http\Resources\Gamesheet as GamesheetResource;
+use App\Gamesheet;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +18,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/user', function () {
+    return new UserResource(User::find(1));
 });
+
+
+Route::apiResource('gamesheets', 'GamesheetController');
