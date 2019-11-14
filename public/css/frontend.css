@@ -42,6 +42,9 @@ body {
 .footer .tabs .tab a:hover {
     background: #26a69a;
 }
+.footer .tabs {
+    overflow: initial !important;
+}
 .footer .tabs .tab a:focus,
 .footer .tabs .tab a.active {
     color: #000 !important;

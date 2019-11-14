@@ -93,4 +93,13 @@ class GamesheetController extends Controller
         $g = Gamesheet::findOrFail($gamesheet);
         return new UserResource($gamesheet->template);
     }
+
+    // TEST FOR THE ANDROID APP
+    public function getExample()
+    {
+        $id = 1;
+        $gs = Gamesheet::findOrFail($id);
+
+        return new GamesheetResource($gs);
+    }
 }
