@@ -22,5 +22,7 @@ Route::get('/user', function () {
     return new UserResource(User::find(1));
 });
 
+// TEST FOR THE ANDROID APP
+Route::get('apiExample', 'GamesheetController@getExample');
 
 Route::apiResource('gamesheets', 'GamesheetController');
