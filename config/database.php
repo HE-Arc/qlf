@@ -46,8 +46,8 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('MYSQL_HOST', env('DB_HOST', 'localhost')),
-            'port' => env('MYSQL_HOST', env('DB_PORT', '3306')),
+            'host' => env('MYSQL_HOST', env('DB_HOST', '127.0.0.1')),
+            'port' => env('MYSQL_PORT', env('DB_PORT', '3306')),
             'database' => env('GROUPNAME', env('DB_DATABASE', 'forge')),
             'username' => env('GROUPNAME', env('DB_USERNAME', 'forge')),
             'password' => env('GROUPNAME', env('DB_PASSWORD', '')),
