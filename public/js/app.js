@@ -155,3 +155,10 @@ function parseJsonGame(json)
 }
 
 parseJsonGame(json);
+
+// Fetch example parser function
+function test(data)
+{
+    let name = data['data']['0']['attributes']['name'];
+    return '<p>' + name + '</p>';
+};

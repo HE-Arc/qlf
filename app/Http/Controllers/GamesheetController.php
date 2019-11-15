@@ -100,6 +100,9 @@ class GamesheetController extends Controller
         $id = 1;
         $gs = Gamesheet::findOrFail($id);
 
-        return new GamesheetResource($gs);
+        $template = $gs->getOriginal('template');
+
+        return $template;
+        //return new GamesheetResource($gs);
     }
 }
