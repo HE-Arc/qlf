@@ -16,4 +16,5 @@ class Gamesheet extends Model
     protected $fillable = [
         'name', 'template', 'downloads', 'user_id',
     ];
+
 }

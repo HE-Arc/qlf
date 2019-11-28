@@ -36,4 +36,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //to link to game timestamps
+    public function games()
+    {
+        return $this->belongsToMany('App\Game')->withTimestamps();
+    }
 }
