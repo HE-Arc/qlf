@@ -154,7 +154,7 @@ function parseJsonGame(json)
     document.querySelector('#json-test').innerHTML = table;
 }
 
-parseJsonGame(json);
+//parseJsonGame(json);
 
 // Fetch example parser function
 function test(data)

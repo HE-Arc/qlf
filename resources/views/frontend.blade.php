@@ -33,6 +33,9 @@
                                     <li>
                                         <a href="#!"><i class="material-icons">info</i>About</a>
                                     </li>
+                                    <li>
+                                        <a href="#!"><i class="material-icons">exit_to_app</i>Log out</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>

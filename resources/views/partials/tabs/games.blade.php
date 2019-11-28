@@ -1,10 +1,9 @@
+<div class="carousel-item" id="tab-games">
+    <!-- FETCH EXAMPLE -->
 
-<!-- FETCH EXAMPLE -->
+    <div id="fetch-test">
+        Fetch Test
+    </div>
 
-<div id="fetch-test">
-    Fetch Test
+    <button class="btn fetch-update" href="api/apiExample" data-target="#fetch-test" data-parser="test" data-replace="true">Fetch !</button>
 </div>
-
-<button class="btn fetch-update" href="api/apiExample" data-target="#fetch-test" data-parser="test" data-replace="true">Fetch !</button>
-
-@include('partials.login')
