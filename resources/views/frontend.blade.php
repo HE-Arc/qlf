@@ -21,6 +21,11 @@
                         <a href="#" class="brand-logo left">qlf</a>
 
                         <ul class="right">
+
+                            <!-- TEMPORAIRE: TEST -->
+                            <li><a class="btn" onclick="toast('Salut pétole !', TOAST.INFO);">TOAST</a></li>
+
+
                             <li>
                                 <a href="#"><i class="material-icons">power_settings_new</i></a>
                             </li>
@@ -36,8 +41,6 @@
                                 </ul>
                             </li>
                         </ul>
-
-
 
                     </div>
                 </nav>
