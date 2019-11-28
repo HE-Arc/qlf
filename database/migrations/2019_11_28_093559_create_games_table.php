@@ -16,6 +16,9 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('created_by');
+            $table->integer('gamesheets_id')->unsigned();
+            $table->foreign('gamesheets_id')->references('id')->on('gamesheets')->onDelete('cascade');
             $table->timestamps();
         });
     }
