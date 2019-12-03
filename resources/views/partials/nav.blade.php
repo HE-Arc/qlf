@@ -27,16 +27,20 @@
                                     <li>
                                         <a href="#!"><i class="material-icons">info</i>About</a>
                                     </li>
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        ><i class="material-icons">exit_to_app</i>Log out</a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                                    </li>
+                                    @auth
+                                        <li>
+                                            <a 
+                                                href="{{ route('logout') }}"
+                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                            >
+                                                <i class="material-icons">exit_to_app</i>
+                                                Log out
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                    @endauth
                                 </ul>
                             </li>
                         </ul>

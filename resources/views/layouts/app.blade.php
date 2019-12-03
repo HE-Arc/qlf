@@ -32,23 +32,13 @@
         <main class="main grey darken-3 white-text">
 
             <div class="tabs-content carousel carousel-slider">
-                    @auth
-                        @include('partials.tabs.live')
-                        @include('partials.tabs.games')
-                        @include('partials.tabs.market')
-                        @include('partials.tabs.settings')
-                    @endauth
-                    @guest
-                        @include('partials.tabs.login')
-                        @include('partials.tabs.register')
-                    @endguest
+                    @yield('main')
             </div>
-
+        @yield('test')
         </main>
 
-        <footer class="footer">
-            @include('partials.footer')
-        </footer>
+        <!-- navigation bar -->
+        @include('partials.footer')
 
         <!-- SCRIPTS -->
         <!--script src="{{ URL::asset('/js/vue.js') }}"></script-->
