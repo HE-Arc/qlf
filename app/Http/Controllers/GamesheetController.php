@@ -6,6 +6,8 @@ use App\Gamesheet;
 use Illuminate\Http\Request;
 use App\Http\Resources\Gamesheet as GamesheetResource;
 
+use App\Http\Resources\User as UserResource;
+
 class GamesheetController extends Controller
 {
     /**

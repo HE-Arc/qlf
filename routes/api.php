@@ -4,8 +4,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Resources\User as UserResource;
 use App\User;
+
 use App\Http\Resources\Gamesheet as GamesheetResource;
 use App\Gamesheet;
+
+use App\Http\Resources\Game as GameResource;
+use App\Game;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +28,7 @@ Route::get('/user', function () {
 
 // TEST FOR THE ANDROID APP
 Route::get('apiExample', 'GamesheetController@getExample');
+
+Route::apiResource('games', 'GameController');
 
 Route::apiResource('gamesheets', 'GamesheetController');

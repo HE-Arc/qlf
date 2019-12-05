@@ -87,22 +87,4 @@ class GameController extends Controller
     {
         //
     }
-
-    public function getTemplate(Game $game)
-    {
-        $g = Game::findOrFail($game);
-        return new UserResource($game->template);
-    }
-
-    // TEST FOR THE ANDROID APP
-    public function getExample()
-    {
-        $id = 1;
-        $gs = Game::findOrFail($id);
-
-        $template = $gs->getOriginal('template');
-
-        return $template;
-        //return new GamesheetResource($gs);
-    }
 }
