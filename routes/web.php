@@ -11,14 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('frontend', function() {
     return view('frontend');
-});
+})->middleware('auth');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+    Route::get('/home', 'HomeController@index')->middleware('auth');
+});
