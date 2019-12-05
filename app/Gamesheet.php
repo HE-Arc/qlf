@@ -17,4 +17,9 @@ class Gamesheet extends Model
         'name', 'template', 'downloads', 'user_id',
     ];
 
+    public function games()
+    {
+        return $this->hasMany('App\Game');
+    }
+
 }

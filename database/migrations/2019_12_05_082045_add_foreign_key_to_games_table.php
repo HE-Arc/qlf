@@ -13,11 +13,13 @@ class AddForeignKeyToGamesTable extends Migration
      */
     public function up()
     {
+        /*
         Schema::table('games', function (Blueprint $table) {
             
             
             $table->foreign('gamesheet_id')->references('id')->on('gamesheets');
         });
+        */
     }
 
     /**
