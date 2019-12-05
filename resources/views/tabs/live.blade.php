@@ -2,5 +2,5 @@
     <!-- TMP: TEST EXAMPLE -->
     <div id="json-test"></div>
 
-    <button class="btn fetch-update" href="api/apiExample" data-target="#json-test" data-parser="test" data-replace="true">Fetch !</button>
+    <button class="btn fetch-update" href="api/gamesheets/1" data-target="#json-test" data-parser="parseJsonGameTemplate" data-replace="true">Fetch !</button>
 </div>

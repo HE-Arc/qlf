@@ -18,7 +18,6 @@ class CreateGamesTable extends Migration
             $table->string('name');
             $table->string('created_by');
             $table->json('scores');
-            $table->unsignedBigInteger('gamesheet_id');
             $table->timestamps();
            
         });

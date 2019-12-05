@@ -14,7 +14,7 @@ class AddForeignKeyToGamesTable extends Migration
     public function up()
     {
         Schema::table('games', function (Blueprint $table) {
-            
+            $table->unsignedBigInteger('gamesheet_id');
             
             $table->foreign('gamesheet_id')->references('id')->on('gamesheets');
         });

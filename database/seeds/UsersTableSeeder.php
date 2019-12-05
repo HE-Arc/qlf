@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use App\User;
+
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        User::create(['name'=>'user', 'email'=>'user@user.user', 'password'=>Hash::make('user')]);
+        
         factory(App\User::class, 50)->create();
     }
 }
