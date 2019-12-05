@@ -29,6 +29,39 @@ function get(url, callback)
 }
 
 /**
+ * Submits a form data to an URL with a REST action (POST, PUT, DELETE)
+ * and then calls the callback
+ * @param  {[String]}   url      [description]
+ * @param  {[String]}   method   [description]
+ * @param  {[String]}   data     [description]
+ * @param  {Function} callback [description]
+ */
+function submitForm(url, method, data, callback)
+{
+    fetch(url,
+        {
+            method: method,
+            headers:
+            {
+                'X-CSRF-TOKEN': getCsrfToken(),
+            },
+            body: data,
+        })
+        .then((response) =>
+        {
+            return response.json();
+        })
+        .then((json) =>
+        {
+            callback(json);
+        })
+        .catch((error) =>
+        {
+            console.log('[Fetch Error]', error);
+        });
+}
+
+/**
  * Fetches data at the given url and then updates the given DOM element.
  *
  * The parser is a function which transforms the received data (JSON)
@@ -65,6 +98,56 @@ function updateContent(url, target, parser, replace = true)
     });
 }
 
+/**
+ * Returns the CSRF Token content
+ * @return {[String]} [description]
+ */
+function getCsrfToken()
+{
+    let csrfToken = document.querySelector('meta[name="csrf-token"]');
+
+    if (! csrfToken)
+    {
+        alert('The CSRF Token is not set !');
+
+        return '';
+    }
+
+    return csrfToken.getAttribute('content');;
+}
+
+/**
+ * Parses the form and returns its content as a String
+ * @param  {[HTML Form]} form [description]
+ * @return {[String]}      [description]
+ */
+function stringifyForm(form)
+{
+    let formData = new FormData(form);
+    let parsedData = {};
+
+    // Iterates over each input
+    for (let name of formData)
+    {
+        // [input name, input value]
+        parsedData[name[0]] = name[1];
+    }
+
+    return JSON.stringify(parsedData);
+}
+
+/**
+ * Displays the request status with a message in a Toast
+ * @param  {[JSON]} json [description]
+ */
+function toastResult(json)
+{
+    let status = json.status;
+    let message = json.message ? json.message : 'No message set !';
+
+    toast(message, TOAST[status]);
+}
+
 // Click on an element with the fetch-update class
 document.addEventListener('click', (evt) =>
 {
@@ -78,5 +161,24 @@ document.addEventListener('click', (evt) =>
         let replace = evt.target.getAttribute('data-replace');
 
         updateContent(url, target, parser, replace);
+    }
+});
+
+// Submit on an element with the fetch-post class
+document.addEventListener('submit', (evt) =>
+{
+    if (evt.target && evt.target.classList.contains('fetch-submit'))
+    {
+        evt.preventDefault();
+
+        let form = evt.target;
+        let url = form.getAttribute('action');
+        let method = form.getAttribute('method');
+        let data = stringifyForm(form);
+
+        submitForm(url, method, data, (json) =>
+        {
+            toastResult(json);
+        });
     }
 });
