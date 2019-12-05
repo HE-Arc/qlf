@@ -164,7 +164,7 @@ document.addEventListener('click', (evt) =>
     }
 });
 
-// Submit on an element with the fetch-post class
+// Submit on an element with the fetch-submit class
 document.addEventListener('submit', (evt) =>
 {
     if (evt.target && evt.target.classList.contains('fetch-submit'))
@@ -176,6 +176,7 @@ document.addEventListener('submit', (evt) =>
         let method = form.getAttribute('method');
         let data = stringifyForm(form);
 
+        // Submits the form data and then displays the result in a toast
         submitForm(url, method, data, (json) =>
         {
             toastResult(json);
