@@ -17,6 +17,7 @@ class CreateGamesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('created_by');
+            $table->json('score');
             $table->integer('gamesheets_id')->unsigned();
             $table->foreign('gamesheets_id')->references('id')->on('gamesheets')->onDelete('cascade');
             $table->timestamps();
