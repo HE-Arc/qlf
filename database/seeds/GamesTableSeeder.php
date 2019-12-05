@@ -14,7 +14,11 @@ class GamesTableSeeder extends Seeder
         DB::table('games')->insert([
             'name' => "premierTest",
             'created_by' => 1,
-            'gamesheets_id' => 1,
+            'gamesheet_id' => 1,
+            'scores' => '{
+                "0": ["12", "22"],
+                "1": ["12", "22"]
+            }',
         ]);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGamesTable extends Migration
+class AddForeignKeyToGamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('games', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('created_by');
-            $table->json('scores');
-            $table->timestamps();
+        Schema::table('games', function (Blueprint $table) {
+            $table->integer('gamesheet_id')->unsigned();
+            $table->foreign('gamesheet_id')->references('id')->on('gamesheets');
         });
     }
 
@@ -29,6 +26,6 @@ class CreateGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('games');
+        //
     }
 }
