@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        dd(\App\Game::findOrFail(1)->gamesheet());
+
         return view('home');
     }
 }
