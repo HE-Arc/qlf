@@ -46,6 +46,14 @@ document.addEventListener('DOMContentLoaded', () =>
     {
         tabs[i].style.width = tabWidth;
     }
+
+    // Inits form create
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {});
+
+    // Inits form select
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems, {});
 });
 
 var json = `

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Gamesheet;
+
 class HomeController extends Controller
 {
     /**
@@ -23,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $templates = Gamesheet::all(['id', 'name']);
+        return view('home', compact('templates'));
     }
 }
