@@ -23,4 +23,4 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/gameCreate', 'GameController@store');
-
+Route::get('/getGameSheet', 'GameSheetController@getTemplatesToSelect');

@@ -170,3 +170,16 @@ function test(data)
     let name = data['data']['0']['attributes']['name'];
     return '<p>' + name + '</p>';
 };
+
+// Fetch the gamesheets (templates) to put in modal for the creation of a game
+function getTemplates()
+{
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {});
+    return "{{ url('getGameSheet') }}";
+}
+
+//JQUERY DOESNT WORK, used to reload the div where there is the modal in order to get the templates (actually sent by homeController)
+$( "#showModal" ).click(function() {
+    $("#formCreateGame").load(window.location.href + "#formCreateGame" );
+  });

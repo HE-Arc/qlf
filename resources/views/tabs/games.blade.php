@@ -15,11 +15,13 @@
             <div class="row">
                 <div class="input-field col s12">
                     <select name="templateChoosen">
-                    @foreach($templates as $template)
-                        <option value="{{ $template->id }}">{{ $template->name}}</option>
-                    @endforeach
+                    @if(isset($templates) != 0)
+                        @foreach($templates as $template)
+                            <option value="{{ $template->id }}">{{ $template->name}}</option>
+                        @endforeach
+                    @endif
                     </select>
-                    <label>Template Selection</label>
+                    <label>GameSheet Selection</label>
                 </div>
                 <div>
                     <label> Name of the game </label>
@@ -37,7 +39,7 @@
     </div>
     
     <!-- Modal Trigger to create game -->
-    <button data-target="formCreateGame" class="btn modal-trigger">Create a game !</button>
+    <button id="showModal" data-target="formCreateGame" class="btn modal-trigger"  onclick=getTemplates()>Create a game !</button>
             
 
     
