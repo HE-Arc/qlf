@@ -7,14 +7,14 @@
 
     <button class="btn fetch-update" href="api/apiExample" data-target="#fetch-test" data-parser="test" data-replace="true">Fetch !</button>
 
-    <!-- Modal Structure -->
-    <div id="modal1" class="modal">
+    <!-- Modal Structure to create game -->
+    <div id="formCreateGame" class="modal">
         <div class="modal-content">
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ url('gameCreate') }}">
             @csrf
             <div class="row">
                 <div class="input-field col s12">
-                    <select>
+                    <select name="templateChoosen">
                     @foreach($templates as $template)
                         <option value="{{ $template->id }}">{{ $template->name}}</option>
                     @endforeach
@@ -36,8 +36,8 @@
         </div>
     </div>
     
-    <!-- Modal Trigger -->
-    <button data-target="modal1" class="btn modal-trigger">Create a game !</button>
+    <!-- Modal Trigger to create game -->
+    <button data-target="formCreateGame" class="btn modal-trigger">Create a game !</button>
             
 
     

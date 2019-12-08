@@ -38,7 +38,15 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $game = new Game;
+        $game->name = $request->nameGame;
+        $game->created_by = auth()->user()->id;;
+        $game->gamesheet_id = $request->templateChoosen;
+        $game->scores = "{}";
+
+        $game->save();
+
+        return view('home');
     }
 
     /**

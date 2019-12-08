@@ -21,3 +21,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
     Route::get('/home', 'HomeController@index')->middleware('auth');
 });
+
+Route::post('/gameCreate', 'GameController@store');
+
