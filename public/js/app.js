@@ -49,46 +49,6 @@ document.addEventListener('DOMContentLoaded', () =>
     }
 });
 
-function parseJsonGame(json)
-{
-    let game = JSON.parse(json);
-
-    let attributes = game.data.attributes;
-    let name = attributes.name;
-    let rows = attributes.row_header;
-    let columns = attributes.column_header;
-
-    let table = '<table><thead><tr><th></th>';
-    for (let col in columns)
-    {
-        table += '<th>' + columns[col].text + '</th>';
-    }
-    table += '</tr></thead>';
-
-    for (let row in rows)
-    {
-        table += '<tr><th>' + rows[row].text + '</th>';
-        for (let tmp in columns)
-        {
-            table += '<td>Empty</td>';
-        }
-        table += '</tr>';
-    }
-
-    table += '</table>';
-
-    document.querySelector('#json-test').innerHTML = table;
-}
-
-//parseJsonGame(json);
-
-// Fetch example parser function
-function test(data)
-{
-    let name = data['data']['0']['attributes']['name'];
-    return '<p>' + name + '</p>';
-};
-
 /**
  * Returns a random between min and max (inclusive)
  * source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -102,39 +62,93 @@ function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
 }
 
+/**
+ * Parse a game's JSON and create a table (html) with content, then to be returned to 'updateContent', which will display it
+ * 
+ * @param {string} json data, JSON of the game
+ */
 function parseJsonGameTemplate(json)
 {
     let gameObject = json.data;
 
-    let name = gameObject.name;
-    let downloads = gameObject.downloads;
+    let idGamesheet = gameObject.gamesheet_id;
+    let nameGame = gameObject.name;
+    let scores = JSON.parse(gameObject.scores);
 
-    let templateObject = JSON.parse(gameObject.template).attributes;
+    // TODO: for now, the created_by column in games table is not linked to a user (not foreign key).
+    // that's why idCreator is a simple string.
+    let idCreator = gameObject.created_by;
 
-    let columns = templateObject.column_header;
-    let rows = templateObject.row_header;
-    let content = templateObject.content;
-
-    let table = '<table><thead><tr><th></th>';
-    for (let col in columns)
+    
+    get('api/gamesheets/'+idGamesheet, (gamesheetData) =>
     {
-        // TODO: player's id shouldnt be fetched from "gamesheets" but from "games". To change.
-        table += '<th> player\'s ID is: ' + columns[col].player_id + '</th>';
-    }
-    table += '</tr></thead>';
-
-    for (let row in rows)
-    {
-        table += '<tr><th>' + rows[row].text + '</th>';
-        for (let col in columns)
+        if (gamesheetData)
         {
-            // TODO: players' scores shouldn't be fetched from "gamesheets" but from "games". To change.
-            table += '<td>' + content[row][col] + '</td>';
+            let gamesheetObject = parseAndGetGamesheetObject(gamesheetData);
+
+            let nameGamesheet = gamesheetObject.nameGamesheet;
+            let downloads = gamesheetObject.downloads;
+            let columns = gamesheetObject.columns;
+            let rows = gamesheetObject.rows;
+
+            let table = '<table><thead><tr><th></th>';
+            for (let col in columns)
+            {
+                // TODO: player's id shouldnt be fetched from "gamesheets" but from "games". To change.
+                table += '<th> player\'s ID is: ' + columns[col].player_id + '</th>';
+            }
+            table += '</tr></thead>';
+
+            for (let row in rows)
+            {
+                table += '<tr><th>' + rows[row].text + '</th>';
+                for (let col in columns)
+                {
+                    table += '<td>' + scores[row][col] + '</td>';
+                }
+                table += '</tr>';
+            }
+
+            table += '</table>';
+
+            // For now, idk why but it's not returning the parsedData to updateContent, even if the 'table' is correctly formed. gonna ask qtipee
+            console.log(table);
+            return table;
         }
-        table += '</tr>';
+        else
+        {
+            return 'Error: Could not get gamesheet related to this game.';
+        }
+    });
+}
+
+/**
+ * Parse and returns an gamesheet object (dictionary), with:
+ * - (key): (description of value)
+ * - nameGamesheet: name of the game
+ * - downloads: number of downloads of this game
+ * - columns: columns header of this template
+ * - rows: rows header of this template
+ * 
+ * @param {string} gamesheetJSON json of the gamesheet
+ */
+function parseAndGetGamesheetObject(gamesheetJSON){
+    let gamesheetData = gamesheetJSON.data;
+
+    let nameGamesheet = gamesheetData.name;
+    let downloads = gamesheetData.downloads;
+
+    let attributesGamesheet = JSON.parse(gamesheetData.template).attributes;
+
+    let columns = attributesGamesheet.column_header;
+    let rows = attributesGamesheet.row_header;
+
+    let gamesheetObject = {
+        "nameGamesheet" : nameGamesheet,
+        "downloads" : downloads,
+        "columns" : columns,
+        "rows" : rows,
     }
 
-    table += '</table>';
-
-    return table;
+    return gamesheetObject;
 }

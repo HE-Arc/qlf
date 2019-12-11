@@ -18,8 +18,21 @@ class GamesTableSeeder extends Seeder
             'created_by' => 1,
             'gamesheet_id' => 1,
             'scores' => '{
-                "0": ["12", "22"],
-                "1": ["12", "22"]
+                "0": {
+                    "0": 17,
+                    "1": 7,
+                    "2": 2
+                  },
+                  "1": {
+                    "0": 53,
+                    "1": 22,
+                    "2": 33
+                  },
+                  "2": {
+                    "0": 22,
+                    "1": 101,
+                    "2": 102
+                  }
             }',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
