@@ -85,7 +85,7 @@ function parseJsonGameTemplate(json, qlf)
 
     let gamesheetName = gamesheetObject.name;
     let downloads = gamesheetObject.downloads;
-    let idGamesheetCreator = gamesheetObject.user_id;
+    let gamesheetCreator = gamesheetObject.created_by;
     
     let template = JSON.parse(gamesheetObject.template);
     let columns = template.attributes.column_header;
@@ -113,7 +113,7 @@ function parseJsonGameTemplate(json, qlf)
     if (qlf){
         infoObject = {
             "gamesheetName": gamesheetName,
-            "idGamesheetCreator": idGamesheetCreator,
+            "gamesheetCreator": gamesheetCreator,
             "downloads": downloads,
             "gameName": gameName,
             "gameCreator": gameCreator,
@@ -128,7 +128,7 @@ function parseJsonGameTemplate(json, qlf)
 function displayInfos(infoObject){
     document.querySelector('#gamesheet-name').innerHTML = infoObject.gamesheetName;
     
-    strGamesheetInfo = "This game's template was created by " + String(infoObject.idGamesheetCreator) + " and was downloaded more than " + String(infoObject.downloads) + " times!";
+    strGamesheetInfo = "This game's template was created by " + String(infoObject.gamesheetCreator.name) + " and was downloaded more than " + String(infoObject.downloads) + " times!";
     document.querySelector('#gamesheet-info').innerHTML = strGamesheetInfo;
 
     document.querySelector('#game-name').innerHTML = infoObject.gameName;
