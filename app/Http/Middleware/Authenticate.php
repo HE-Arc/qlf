@@ -14,7 +14,11 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
+        if (! $request->expectsJson())
+        {
+            //\Cookie::queue(\Cookie::forget('_token'));
+
+            //FIXME
             return route('login');
         }
     }

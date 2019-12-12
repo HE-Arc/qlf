@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('frontend', function() {
-    return view('frontend');
-})->middleware('auth');
-
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {

@@ -18,11 +18,18 @@ use App\Gamesheet;
 |
 */
 
-Route::get('/user', function () {
-    return new UserResource(User::find(1));
-});
-
 // TEST FOR THE ANDROID APP
 Route::get('apiExample', 'GamesheetController@getExample');
 
 Route::apiResource('gamesheets', 'GamesheetController');
+
+// API authenticating protected routes
+Route::group(['middleware' => ['auth:api']], function()
+{
+    Route::get('/user', function(Request $request)
+    {
+        return $request->user();
+    });
+
+    Route::post('changeUsername', 'UserController@changeUsername');
+});
