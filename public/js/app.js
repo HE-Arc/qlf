@@ -71,7 +71,6 @@ function parseJsonGameTemplate(json)
 {
     let gameObject = json.data;
 
-    let idGamesheet = gameObject.gamesheet_id;
     let nameGame = gameObject.name;
     let scores = JSON.parse(gameObject.scores);
 
@@ -79,47 +78,38 @@ function parseJsonGameTemplate(json)
     // that's why idCreator is a simple string.
     let idCreator = gameObject.created_by;
 
+    gamesheetObject = gameObject.gamesheet;
+
+    let nameGamesheet = gamesheetObject.name;
+    let downloads = gamesheetObject.downloads;
     
-    get('api/gamesheets/'+idGamesheet, (gamesheetData) =>
+    let template = JSON.parse(gamesheetObject.template);
+    let columns = template.attributes.column_header;
+    let rows = template.attributes.row_header;
+
+    let table = '<table><thead><tr><th></th>';
+    for (let col in columns)
     {
-        if (gamesheetData)
+        // TODO: player's id shouldnt be fetched from "gamesheets" but from "games". To change.
+        table += '<th> player\'s ID is: ' + columns[col].player_id + '</th>';
+    }
+    table += '</tr></thead>';
+
+    for (let row in rows)
+    {
+        table += '<tr><th>' + rows[row].text + '</th>';
+        for (let col in columns)
         {
-            let gamesheetObject = parseAndGetGamesheetObject(gamesheetData);
-
-            let nameGamesheet = gamesheetObject.nameGamesheet;
-            let downloads = gamesheetObject.downloads;
-            let columns = gamesheetObject.columns;
-            let rows = gamesheetObject.rows;
-
-            let table = '<table><thead><tr><th></th>';
-            for (let col in columns)
-            {
-                // TODO: player's id shouldnt be fetched from "gamesheets" but from "games". To change.
-                table += '<th> player\'s ID is: ' + columns[col].player_id + '</th>';
-            }
-            table += '</tr></thead>';
-
-            for (let row in rows)
-            {
-                table += '<tr><th>' + rows[row].text + '</th>';
-                for (let col in columns)
-                {
-                    table += '<td>' + scores[row][col] + '</td>';
-                }
-                table += '</tr>';
-            }
-
-            table += '</table>';
-
-            // For now, idk why but it's not returning the parsedData to updateContent, even if the 'table' is correctly formed. gonna ask qtipee
-            console.log(table);
-            return table;
+            table += '<td>' + scores[row][col] + '</td>';
         }
-        else
-        {
-            return 'Error: Could not get gamesheet related to this game.';
-        }
-    });
+        table += '</tr>';
+    }
+
+    table += '</table>';
+
+    // For now, idk why but it's not returning the parsedData to updateContent, even if the 'table' is correctly formed. gonna ask qtipee
+    console.log(table);
+    return table;
 }
 
 /**
