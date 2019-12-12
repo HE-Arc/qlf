@@ -17,9 +17,7 @@ class GamesheetController extends Controller
      */
     public function index()
     {
-        $gamesheets = Gamesheet::all();
-
-        return new GamesheetResource($gamesheets);
+        return GamesheetResource::collection(Gamesheet::all());
     }
 
     /**
