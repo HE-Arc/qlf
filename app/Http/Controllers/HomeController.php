@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Gamesheet;
+
 class HomeController extends Controller
 {
     /**

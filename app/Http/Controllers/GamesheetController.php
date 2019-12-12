@@ -94,14 +94,18 @@ class GamesheetController extends Controller
         return new UserResource($gamesheet->template);
     }
 
+    public function getTemplatesToSelect()
+    {
+        $all = Gamesheet::all();
+        return $all;
+    }
+
     // TEST FOR THE ANDROID APP
     public function getExample()
     {
         $id = 1;
         $gs = Gamesheet::findOrFail($id);
-
         $template = $gs->getOriginal('template');
-
         return $template;
         //return new GamesheetResource($gs);
     }

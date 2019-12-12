@@ -47,6 +47,13 @@ document.addEventListener('DOMContentLoaded', () =>
     {
         tabs[i].style.width = tabWidth;
     }
+
+    // Inits form create
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {});
+
+    // Inits form select
+    var elems = document.querySelectorAll('select');
 });
 
 /**
@@ -179,6 +186,29 @@ function displayInfos(infoObject){
     
     strGameInfo = "Game created by " + String(infoObject.gameCreator.name) + ", " + timeSince(infoObject.gameCreationDate) + " ago.";
     document.querySelector('#game-info').innerHTML = strGameInfo;
+}
+
+
+/**
+ * 
+ * Fetch the gamesheets (templates) to put in modal for the creation of a game
+ * 
+ * @param {string} json data, JSON of the gamesheet
+ * @param {bool} qlf false for generic function, true for qlf web app
+ */
+function getTemplates(data, qlf)
+{
+    var allTemplates = [];
+    data.forEach(element => {
+        allTemplates.push([element['id'],element['name']]);
+    });
+    return allTemplates;
+}
+
+document.getElementById('showModal').onclick = function triggerModal() {
+    var Modalelem = document.querySelector('.modal');
+    var instance = M.Modal.init(Modalelem);
+    instance.open();
 }
 
 /**

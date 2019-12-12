@@ -73,8 +73,9 @@ function submitForm(url, method, data, callback)
  * @param  {[DOM Object]}  target         [description]
  * @param  {[Function]}  parser         [description]
  * @param  {Boolean} [replace=true] [description]
+ * @param  {Boolean} [inselect=false] [description]
  */
-function updateContent(url, target, parser, replace = true, qlf = false)
+function updateContent(url, target, parser, replace = true, inselect = false, qlf=false)
 {
     // Fetches the data
     get(url, (data) =>
@@ -85,7 +86,19 @@ function updateContent(url, target, parser, replace = true, qlf = false)
             let parsedData = parser(data, qlf);
 
             // Overrides the target content
-            if (replace === 'true')
+            if(inselect === 'true')
+            {
+                $("form input").val("");
+                parsedData.forEach(element => {
+                    var $newOpt = $("<option>").attr("value",element[0]).text(element[1])
+                    $(target).append($newOpt);
+                  });
+                // fire custom event anytime you've updated select
+                $(target).trigger('contentChanged');
+
+                $(target).formSelect();
+            }
+            else if (replace === 'true')
             {
                 target.innerHTML = parsedData;
             }
@@ -159,13 +172,14 @@ document.addEventListener('click', (evt) =>
         let target = document.querySelector(evt.target.getAttribute('data-target'));
         let parser = window[evt.target.getAttribute('data-parser')];
         let replace = evt.target.getAttribute('data-replace');
+        let inselect = evt.target.getAttribute('data-inselect');
 
-        updateContent(url, target, parser, replace, true);
+        updateContent(url, target, parser, replace, inselect, true);
 
         if (evt.target.classList.contains('fetch-sync'))
         {
             setInterval(async function(){
-                updateContent(url, target, parser, replace, false);
+                updateContent(url, target, parser, replace, inselect, false);
             }, 1000);
         }
     }
