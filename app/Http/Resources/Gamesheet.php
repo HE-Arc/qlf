@@ -19,7 +19,7 @@ class Gamesheet extends JsonResource
             'name' => $this->name,
             'template' => $this->template,
             'downloads' => $this->downloads,
-            'created_by' => $this->created_by,
+            'created_by' => $this->createdBy,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];
