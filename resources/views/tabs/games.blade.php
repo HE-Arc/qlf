@@ -3,24 +3,14 @@
 @endpush
 
 <div class="carousel-item" id="tab-games">
-    <!-- FETCH EXAMPLE -->
-
-    <div id="fetch-test">
-        Fetch Test
-    </div>
-
-    <button class="btn fetch-update" href="api/apiExample" data-target="#fetch-test" data-parser="test" data-replace="true">Fetch !</button>
-
     <!-- Modal Structure to create game -->
     <div id="formCreateGame" class="modal">
         <div class="modal-content">
-            <form method="POST" action="{{ url('/gameCreate') }}">
-            @csrf
+            <form method="POST" action="{{ url('/games') }}">
+            <meta name="csrf-token" content="{{ csrf_token() }}">
             <div class="row">
                 <div class="input-field col s12">
-                    <select name="templateChoosen" id="optionsTemplates" class="materialSelect">
-                    <option value="" disabled selected>Choose your option</option>
-                    </select>
+                    <select name="templateChoosen" id="optionsTemplates" class="materialSelect"></select>
                     <label>GameSheet Selection</label>
                 </div>
                 <div>
@@ -39,4 +29,5 @@
     <!-- Modal Trigger to create game -->
     <button id="showModal" class="btn fetch-update" href="api/getGameSheet" data-target="#optionsTemplates" data-parser="getTemplates" data-replace="false" data-inselect="true">Create a game !</button>
     
+    <div id="listGames"></div>
 </div>

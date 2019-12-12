@@ -38,7 +38,6 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         $game = new Game;
         $game->name = $request->nameGame;
         $game->created_by = auth()->user()->id;;

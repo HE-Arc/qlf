@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () =>
 
     // Inits form select
     var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems, {});
 });
 
 var json = `
