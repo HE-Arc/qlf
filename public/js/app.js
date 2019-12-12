@@ -136,7 +136,7 @@ function parseJsonGameTemplate(json, qlf)
     let columns = template.attributes.column_header;
     let rows = template.attributes.row_header;
 
-    let table = '<table><thead><tr><th></th>';
+    let table = '<table class="responsive-table highlight"><thead><tr><th></th>';
     for (let col in columns)
     {
         table += '<th>' + players[col].name + '</th>';

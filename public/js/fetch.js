@@ -180,7 +180,7 @@ document.addEventListener('click', (evt) =>
         {
             setInterval(async function(){
                 updateContent(url, target, parser, replace, inselect, false);
-            }, 1000);
+            }, 5000);
         }
     }
 });
