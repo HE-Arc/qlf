@@ -40,7 +40,7 @@ class GameController extends Controller
     {
         $game = new Game;
         $game->name = $request->nameGame;
-        $game->created_by = auth()->user()->id;;
+        $game->user_id = auth()->user()->id;
         $game->gamesheet_id = $request->templateChoosen;
         $game->scores = "{}";
 
