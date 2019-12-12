@@ -16,7 +16,6 @@ class Game extends JsonResource
      */
     public function toArray($request)
     {
-        dd($this->users);
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -25,6 +24,7 @@ class Game extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'gamesheet' => new GamesheetResource(Gamesheet::find($this->gamesheet_id)),
+            'players' => $this->users
         ];
     }
 }

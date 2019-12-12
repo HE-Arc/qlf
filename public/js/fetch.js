@@ -41,7 +41,7 @@ function get(url, callback)
  * @param  {[Function]}  parser         [description]
  * @param  {Boolean} [replace=true] [description]
  */
-function updateContent(url, target, parser, replace = true)
+function updateContent(url, target, parser, replace = true, qlf = false)
 {
     // Fetches the data
     get(url, (data) =>
@@ -49,7 +49,7 @@ function updateContent(url, target, parser, replace = true)
         if (data)
         {
             // Parses the received data
-            let parsedData = parser(data);
+            let parsedData = parser(data, qlf);
 
             // Overrides the target content
             if (replace === 'true')
@@ -77,6 +77,6 @@ document.addEventListener('click', (evt) =>
         let parser = window[evt.target.getAttribute('data-parser')];
         let replace = evt.target.getAttribute('data-replace');
 
-        updateContent(url, target, parser, replace);
+        updateContent(url, target, parser, replace, true);
     }
 });

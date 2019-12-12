@@ -63,25 +63,32 @@ function getRandomIntInclusive(min, max) {
 }
 
 /**
- * Parse a game's JSON and create a table (html) with content, then to be returned to 'updateContent', which will display it
+ * Parse a game's JSON and create a table (html) with content.
+ * Then, will be returned to 'updateContent', which will display it.
+ * 
+ * It is a generic function, but with's 'qlf' param, it will call a function to "populate" qlf website.
  * 
  * @param {string} json data, JSON of the game
+ * @param {bool} qlf false for generic function, true for qlf web app
  */
-function parseJsonGameTemplate(json)
+function parseJsonGameTemplate(json, qlf)
 {
     let gameObject = json.data;
 
-    let nameGame = gameObject.name;
+    let gameName = gameObject.name;
     let scores = JSON.parse(gameObject.scores);
+    let players = gameObject.players;
+    let gameCreationDate = new Date(gameObject.created_at);
 
     // TODO: for now, the created_by column in games table is not linked to a user (not foreign key).
-    // that's why idCreator is a simple string.
-    let idCreator = gameObject.created_by;
+    // that's why idGameCreator is a simple string.
+    let idGameCreator = gameObject.created_by;
 
     gamesheetObject = gameObject.gamesheet;
 
-    let nameGamesheet = gamesheetObject.name;
+    let gamesheetName = gamesheetObject.name;
     let downloads = gamesheetObject.downloads;
+    let idGamesheetCreator = gamesheetObject.user_id;
     
     let template = JSON.parse(gamesheetObject.template);
     let columns = template.attributes.column_header;
@@ -90,8 +97,7 @@ function parseJsonGameTemplate(json)
     let table = '<table><thead><tr><th></th>';
     for (let col in columns)
     {
-        // TODO: player's id shouldnt be fetched from "gamesheets" but from "games". To change.
-        table += '<th> player\'s ID is: ' + columns[col].player_id + '</th>';
+        table += '<th>' + players[col].name + '</th>';
     }
     table += '</tr></thead>';
 
@@ -107,38 +113,66 @@ function parseJsonGameTemplate(json)
 
     table += '</table>';
 
-    // For now, idk why but it's not returning the parsedData to updateContent, even if the 'table' is correctly formed. gonna ask qtipee
-    console.log(table);
+    if (qlf){
+        infoObject = {
+            "gamesheetName": gamesheetName,
+            "idGamesheetCreator": idGamesheetCreator,
+            "downloads": downloads,
+            "gameName": gameName,
+            "idGameCreator": idGameCreator,
+            "gameCreationDate": gameCreationDate,
+        }
+        displayInfos(infoObject);
+    }
+
     return table;
 }
 
+function displayInfos(infoObject){
+    document.querySelector('#gamesheet-name').innerHTML = infoObject.gamesheetName;
+    
+    strGamesheetInfo = "This game's template was created by " + String(infoObject.idGamesheetCreator) + " and was downloaded more than " + String(infoObject.downloads) + " times!";
+    document.querySelector('#gamesheet-info').innerHTML = strGamesheetInfo;
+
+    document.querySelector('#game-name').innerHTML = infoObject.gameName;
+    
+    strGameInfo = "Game created by " + String(infoObject.idGameCreator) + ", " + timeSince(infoObject.gameCreationDate) + " ago.";
+    document.querySelector('#game-info').innerHTML = strGameInfo;
+}
+
 /**
- * Parse and returns an gamesheet object (dictionary), with:
- * - (key): (description of value)
- * - nameGamesheet: name of the game
- * - downloads: number of downloads of this game
- * - columns: columns header of this template
- * - rows: rows header of this template
+ * Returns time elapsed since a date (param)
+ * e.g.:
+ * 1 minute ago, 1 month ago, ...
+ *
+ * credit and source: https://stackoverflow.com/a/3177838
  * 
- * @param {string} gamesheetJSON json of the gamesheet
+ * @param {date} date
  */
-function parseAndGetGamesheetObject(gamesheetJSON){
-    let gamesheetData = gamesheetJSON.data;
+function timeSince(date) {
 
-    let nameGamesheet = gamesheetData.name;
-    let downloads = gamesheetData.downloads;
+    var seconds = Math.floor((new Date() - date) / 1000);
 
-    let attributesGamesheet = JSON.parse(gamesheetData.template).attributes;
+    var interval = Math.floor(seconds / 31536000);
 
-    let columns = attributesGamesheet.column_header;
-    let rows = attributesGamesheet.row_header;
-
-    let gamesheetObject = {
-        "nameGamesheet" : nameGamesheet,
-        "downloads" : downloads,
-        "columns" : columns,
-        "rows" : rows,
+    if (interval > 1) {
+        return interval + " years";
     }
-
-    return gamesheetObject;
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+        return interval + " months";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+        return interval + " days";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+        return interval + " hours";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+        return interval + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
 }
