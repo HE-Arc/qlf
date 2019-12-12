@@ -180,7 +180,12 @@ document.addEventListener('click', (evt) =>
         {
             setInterval(async function(){
                 updateContent(url, target, parser, replace, inselect, false);
-            }, 1000);
+            }, 5000);
+        }
+
+        if (evt.target.classList.contains('go-to-live'))
+        {
+            //stop interval and restart it, change tab
         }
     }
 });
@@ -204,3 +209,4 @@ document.addEventListener('submit', (evt) =>
         });
     }
 });
+

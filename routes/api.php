@@ -34,3 +34,7 @@ Route::apiResource('games', 'GameController');
 Route::apiResource('gamesheets', 'GamesheetController');
 
 Route::get('getGameSheet', 'GamesheetController@getTemplatesToSelect');
+
+Route::get('getGamesUser', 'GameController@getGamesUser');
+
+Route::get('/live', 'HomeController@gotToLive');

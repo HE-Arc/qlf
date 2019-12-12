@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () =>
 
     // Inits form select
     var elems = document.querySelectorAll('select');
+
 });
 
 /**
@@ -161,11 +162,29 @@ function getTemplates(data, qlf)
     return allTemplates;
 }
 
+/**
+ * 
+ * Fetch the gamesheets (templates) to put in modal for the creation of a game
+ * 
+ * @param {string} json data, JSON of the gamesheet
+ * @param {bool} qlf false for generic function, true for qlf web app
+ */
+function displayGamesUser(data, qlf)
+{
+    gamesUser = "";
+    data.forEach(element => {
+        gamesUser = gamesUser.concat("<a class='go-to-live collection-item fetch-update' href='api/games/", element['id'] ,"'  data-target='#json-test' data-parser='parseJsonGameTemplate' data-replace='true'>", element['name'], "</a>");
+    });
+    return gamesUser;
+}
+
+// set the onclick on the button to show the model
 document.getElementById('showModal').onclick = function triggerModal() {
     var Modalelem = document.querySelector('.modal');
     var instance = M.Modal.init(Modalelem);
     instance.open();
 }
+
 
 /**
  * Returns time elapsed since a date (param)

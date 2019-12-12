@@ -21,6 +21,17 @@ class GameController extends Controller
     }
 
     /**
+     * Display list of user's game
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getGamesUser(Request $request)
+    {
+        $all = Game::all();
+        return $all;
+    }
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

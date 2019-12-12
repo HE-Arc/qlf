@@ -26,8 +26,15 @@
         </div>
     </div>
     
-    <!-- Modal Trigger to create game -->
+    <!-- Modal Trigger to create a game -->
     <button id="showModal" class="btn fetch-update" href="api/getGameSheet" data-target="#optionsTemplates" data-parser="getTemplates" data-replace="false" data-inselect="true">Create a game !</button>
+
+     <!-- Button to join a game -->
+    <button id="" class="btn fetch-update" href="" data-target="" data-parser="" data-replace="" data-inselect="">Join a game !</button>
     
-    <div id="listGames"></div>
+    <br>
+    <!-- Button to show user's games -->
+    <button id="showUserGames" class="btn fetch-update" href="api/getGamesUser" data-target="#listGames" data-parser="displayGamesUser" data-replace="true" data-inselect="false">Show your games </button>
+    <div class="collection" id="listGames">
+    </div>
 </div>
