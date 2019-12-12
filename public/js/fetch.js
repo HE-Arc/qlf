@@ -174,7 +174,14 @@ document.addEventListener('click', (evt) =>
         let replace = evt.target.getAttribute('data-replace');
         let inselect = evt.target.getAttribute('data-inselect');
 
-        updateContent(url, target, parser, replace, inselect, true);
+        updateContent(url, target, parser, replace, true);
+
+        if (evt.target.classList.contains('fetch-sync'))
+        {
+            setInterval(async function(){
+                updateContent(url, target, parser, replace, false);
+            }, 1000);
+        }
     }
 });
 
