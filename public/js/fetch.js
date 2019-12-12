@@ -190,3 +190,16 @@ document.addEventListener('submit', (evt) =>
         });
     }
 });
+
+// On load, fetch data for market tab, user tab, ...
+document.addEventListener('DOMContentLoaded', () =>
+{
+
+    let urlMarket = 'api/gamesheets';
+    let target = document.querySelector('#market-gamesheets');
+    let parser = parseJsonMarketTemplate;
+    let replace = 'true';
+
+    updateContent(urlMarket, target, parser, replace);
+
+});
