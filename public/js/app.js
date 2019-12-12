@@ -79,10 +79,7 @@ function parseJsonGameTemplate(json, qlf)
     let scores = JSON.parse(gameObject.scores);
     let players = gameObject.players;
     let gameCreationDate = new Date(gameObject.created_at);
-
-    // TODO: for now, the created_by column in games table is not linked to a user (not foreign key).
-    // that's why idGameCreator is a simple string.
-    let idGameCreator = gameObject.created_by;
+    let gameCreator = gameObject.created_by;
 
     gamesheetObject = gameObject.gamesheet;
 
@@ -119,7 +116,7 @@ function parseJsonGameTemplate(json, qlf)
             "idGamesheetCreator": idGamesheetCreator,
             "downloads": downloads,
             "gameName": gameName,
-            "idGameCreator": idGameCreator,
+            "gameCreator": gameCreator,
             "gameCreationDate": gameCreationDate,
         }
         displayInfos(infoObject);
@@ -136,7 +133,7 @@ function displayInfos(infoObject){
 
     document.querySelector('#game-name').innerHTML = infoObject.gameName;
     
-    strGameInfo = "Game created by " + String(infoObject.idGameCreator) + ", " + timeSince(infoObject.gameCreationDate) + " ago.";
+    strGameInfo = "Game created by " + String(infoObject.gameCreator.name) + ", " + timeSince(infoObject.gameCreationDate) + " ago.";
     document.querySelector('#game-info').innerHTML = strGameInfo;
 }
 

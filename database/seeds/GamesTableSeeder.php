@@ -16,7 +16,7 @@ class GamesTableSeeder extends Seeder
         DB::table('games')->insert(
             [
                 'name' => 'Game1',
-                'created_by' => 1,
+                'user_id' => 1,
                 'gamesheet_id' => 1,
                 'scores' => '{
                     "0": {
@@ -43,7 +43,7 @@ class GamesTableSeeder extends Seeder
         DB::table('games')->insert(
             [
                 'name' => 'Game2',
-                'created_by' => 2,
+                'user_id' => 2,
                 'gamesheet_id' => 2,
                 'scores' => '{
                     "0": {
