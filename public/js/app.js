@@ -125,6 +125,12 @@ function parseJsonGameTemplate(json, qlf)
     return table;
 }
 
+/**
+ * Will display infos on live tab, like game name, created by who, etc... 
+ * Called if it's the first time that we load a live game. 
+ * 
+ * @param {object} infoObject 
+ */
 function displayInfos(infoObject){
     document.querySelector('#gamesheet-name').innerHTML = infoObject.gamesheetName;
     
