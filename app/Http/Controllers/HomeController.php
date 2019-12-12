@@ -25,7 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $templates = Gamesheet::all(['id', 'name']);
-        return view('home', compact('templates'));
+        return view('home');
     }
 }

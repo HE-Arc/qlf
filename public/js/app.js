@@ -1,3 +1,4 @@
+
 const $$ = {
     header: document.querySelector('.header'),
     main: document.querySelector('.main'),
@@ -172,14 +173,17 @@ function test(data)
 };
 
 // Fetch the gamesheets (templates) to put in modal for the creation of a game
-function getTemplates()
+function getTemplates(data)
 {
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems, {});
-    return "{{ url('getGameSheet') }}";
+    var allTemplates = [];
+    data.forEach(element => {
+        allTemplates.push([element['id'],element['name']]);
+    });
+    return allTemplates;
 }
 
-//JQUERY DOESNT WORK, used to reload the div where there is the modal in order to get the templates (actually sent by homeController)
-$( "#showModal" ).click(function() {
-    $("#formCreateGame").load(window.location.href + "#formCreateGame" );
-  });
+document.getElementById('showModal').onclick = function triggerModal() {
+    var Modalelem = document.querySelector('.modal');
+    var instance = M.Modal.init(Modalelem);
+    instance.open();
+}

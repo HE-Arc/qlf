@@ -98,7 +98,8 @@ class GamesheetController extends Controller
 
     public function getTemplatesToSelect()
     {
-        return Gamesheet::all(['id', 'name']);
+        $all = Gamesheet::all();
+        return $all;
     }
 
     // TEST FOR THE ANDROID APP
@@ -106,9 +107,7 @@ class GamesheetController extends Controller
     {
         $id = 1;
         $gs = Gamesheet::findOrFail($id);
-
         $template = $gs->getOriginal('template');
-
         return $template;
         //return new GamesheetResource($gs);
     }

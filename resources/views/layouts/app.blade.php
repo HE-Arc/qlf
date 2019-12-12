@@ -19,8 +19,9 @@
         <link rel="stylesheet" href="{{ URL::asset('/css/materialize.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('/css/frontend.css') }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+        
         @stack('styles')
+        @stack('headScripts')
 
     </head>
     <body>

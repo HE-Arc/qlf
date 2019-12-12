@@ -1,3 +1,7 @@
+@push('headScripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+@endpush
+
 <div class="carousel-item" id="tab-games">
     <!-- FETCH EXAMPLE -->
 
@@ -10,16 +14,12 @@
     <!-- Modal Structure to create game -->
     <div id="formCreateGame" class="modal">
         <div class="modal-content">
-            <form method="POST" action="{{ url('gameCreate') }}">
+            <form method="POST" action="{{ url('/gameCreate') }}">
             @csrf
             <div class="row">
                 <div class="input-field col s12">
-                    <select name="templateChoosen">
-                    @if(isset($templates) != 0)
-                        @foreach($templates as $template)
-                            <option value="{{ $template->id }}">{{ $template->name}}</option>
-                        @endforeach
-                    @endif
+                    <select name="templateChoosen" id="optionsTemplates" class="materialSelect">
+                    <option value="" disabled selected>Choose your option</option>
                     </select>
                     <label>GameSheet Selection</label>
                 </div>
@@ -32,15 +32,11 @@
                     <button class="btn"formaction="{{ route('home') }}">Cancel</button>
                 </div>
             </div>
-
-            
             </form>
         </div>
     </div>
     
     <!-- Modal Trigger to create game -->
-    <button id="showModal" data-target="formCreateGame" class="btn modal-trigger"  onclick=getTemplates()>Create a game !</button>
-            
-
+    <button id="showModal" class="btn fetch-update" href="api/getGameSheet" data-target="#optionsTemplates" data-parser="getTemplates" data-replace="false" data-inselect="true">Create a game !</button>
     
 </div>

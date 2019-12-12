@@ -32,3 +32,5 @@ Route::get('apiExample', 'GamesheetController@getExample');
 Route::apiResource('games', 'GameController');
 
 Route::apiResource('gamesheets', 'GamesheetController');
+
+Route::get('getGameSheet', 'GamesheetController@getTemplatesToSelect');
