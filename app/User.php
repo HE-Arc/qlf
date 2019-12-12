@@ -37,9 +37,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    //to link to game timestamps
+    // games this user is currently playing
     public function games()
     {
         return $this->belongsToMany('App\Game')->withTimestamps();
     }
+
+    // games this user has created (in 'games' table)
+    public function created_games()
+    {
+        return $this->hasMany('App\Game');
+    }
+
+    // gamesheets this user has created (in 'gamesheets' table)
+    public function created_gamesheets()
+    {
+        return $this->hasMany('App\Gamesheet');
+    }
+
 }

@@ -59,7 +59,7 @@ class GameController extends Controller
     {
         $g = Game::findOrFail($game);
 
-        return new UserResource($game);
+        return new GameResource($game);
     }
 
     /**

@@ -14,7 +14,7 @@ class CreateGamesheetsTable extends Migration
     public function up()
     {
         Schema::create('gamesheets', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->json('template');
             $table->integer('downloads');

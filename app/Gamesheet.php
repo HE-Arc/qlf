@@ -17,5 +17,9 @@ class Gamesheet extends Model
         'name', 'template', 'downloads', 'user_id',
     ];
 
-    
+    // gamesheet's creator
+    public function created_by()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }
