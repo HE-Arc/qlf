@@ -64,7 +64,6 @@ function submitForm(url, method, data, callback)
         })
         .then((json) =>
         {
-            console.log(json);
             callback(json);
         })
         .catch((error) =>

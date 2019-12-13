@@ -25,6 +25,19 @@ class Controller extends BaseController
     }
 
     /**
+     * Returns an informative response with the given message.
+     * @param  [type] $message [description]
+     * @return [type]          [description]
+     */
+    protected function responseInfo($message)
+    {
+        return response()->json([
+            'status' => 'INFO',
+            'message' => $message,
+        ], 200);
+    }
+
+    /**
      * Returns a success response with the given message.
      * @param  [type] $message [description]
      * @return [type]          [description]
@@ -33,6 +46,19 @@ class Controller extends BaseController
     {
         return response()->json([
             'status' => 'SUCCESS',
+            'message' => $message,
+        ], 200);
+    }
+
+    /**
+     * Returns a warning response with the given message.
+     * @param  [type] $message [description]
+     * @return [type]          [description]
+     */
+    protected function responseWarning($message)
+    {
+        return response()->json([
+            'status' => 'WARNING',
             'message' => $message,
         ], 200);
     }

@@ -8,12 +8,15 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    // Updates the username
     public function changeUsername(Request $request)
     {
+        // Validation
         $validator = $this->validateJson($request, [
             'username' => 'required',
         ]);
 
+        // Validation fails
         if ($validator->fails())
         {
             return $this->responseError($validator);
@@ -23,6 +26,8 @@ class UserController extends Controller
 
         $user = Auth::user();
         $user->name = $username;
+
+        // Updates the username
         $user->save();
 
         return $this->responseSuccess('Username successfully updated !');
