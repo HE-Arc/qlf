@@ -33,8 +33,6 @@
     <button id="" class="btn fetch-update" href="" data-target="" data-parser="" data-replace="" data-inselect="">Join a game !</button>
     
     <br>
-    <!-- Button to show user's games -->
-    <button id="showUserGames" class="btn fetch-update" href="api/getGamesUser" data-target="#listGames" data-parser="displayGamesUser" data-replace="true" data-inselect="false">Show your games </button>
     <div class="collection" id="listGames">
     </div>
 </div>

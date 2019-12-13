@@ -224,3 +224,15 @@ document.addEventListener('submit', (evt) =>
     }
 });
 
+
+// On load, fetch data for market tab, user tab, ...
+document.addEventListener('DOMContentLoaded', () =>
+{
+
+    let urlGames = 'api/getGamesUser';
+    let targetGames = document.querySelector('#listGames');
+    let parserGames = displayGamesUser;
+    let replaceGames = 'true';
+
+    updateContent(urlGames, targetGames, parserGames, replaceGames);
+});
