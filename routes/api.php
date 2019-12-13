@@ -4,8 +4,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Resources\User as UserResource;
 use App\User;
+
 use App\Http\Resources\Gamesheet as GamesheetResource;
 use App\Gamesheet;
+
+use App\Http\Resources\Game as GameResource;
+use App\Game;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +25,11 @@ use App\Gamesheet;
 // TEST FOR THE ANDROID APP
 Route::get('apiExample', 'GamesheetController@getExample');
 
+Route::apiResource('games', 'GameController');
+
 Route::apiResource('gamesheets', 'GamesheetController');
+
+Route::get('getGameSheet', 'GamesheetController@getTemplatesToSelect');
 
 // API authenticating protected routes
 Route::group(['middleware' => ['auth:api']], function()

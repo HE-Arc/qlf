@@ -13,3 +13,6 @@ yarn-error.log
 
 #macOS
 .DS_Store
+
+#csrf
+/app/Http/Middleware/VerifyCsrfToken.php

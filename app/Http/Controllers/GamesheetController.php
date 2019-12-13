@@ -6,6 +6,8 @@ use App\Gamesheet;
 use Illuminate\Http\Request;
 use App\Http\Resources\Gamesheet as GamesheetResource;
 
+use App\Http\Resources\User as UserResource;
+
 class GamesheetController extends Controller
 {
     /**
@@ -15,9 +17,7 @@ class GamesheetController extends Controller
      */
     public function index()
     {
-        $gamesheets = Gamesheet::all();
-
-        return new GamesheetResource($gamesheets);
+        return GamesheetResource::collection(Gamesheet::all());
     }
 
     /**
@@ -94,14 +94,18 @@ class GamesheetController extends Controller
         return new UserResource($gamesheet->template);
     }
 
+    public function getTemplatesToSelect()
+    {
+        $all = Gamesheet::all();
+        return $all;
+    }
+
     // TEST FOR THE ANDROID APP
     public function getExample()
     {
         $id = 1;
         $gs = Gamesheet::findOrFail($id);
-
         $template = $gs->getOriginal('template');
-
         return $template;
         //return new GamesheetResource($gs);
     }

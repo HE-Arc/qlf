@@ -3,8 +3,10 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Gamesheet as GamesheetResource;
+use App\Gamesheet as Gamesheet;
 
-class Gamesheet extends JsonResource
+class Game extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +19,12 @@ class Gamesheet extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'template' => $this->template,
-            'downloads' => $this->downloads,
-            'created_by' => $this->createdBy,
+            'scores' => $this->scores,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
+            'gamesheet' => new GamesheetResource(Gamesheet::find($this->gamesheet_id)),
+            'players' => $this->users,
+            'created_by' => $this->createdBy,
         ];
     }
 }
