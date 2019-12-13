@@ -1,4 +1,7 @@
 
+// Initialize the var intervall so we can start and stop it
+var interval = null;
+
 // Fetch API not available
 if (!window.fetch)
 {
@@ -178,14 +181,25 @@ document.addEventListener('click', (evt) =>
 
         if (evt.target.classList.contains('fetch-sync'))
         {
-            setInterval(async function(){
+            interval = setInterval(async function(){
                 updateContent(url, target, parser, replace, inselect, false);
             }, 5000);
         }
 
+        // "go-to-live" define the list of games of a user. When we click on it,
+        // we need to stop the interval if exists, start a new one and go to live
         if (evt.target.classList.contains('go-to-live'))
         {
-            //stop interval and restart it, change tab
+            if (typeof interval !== 'undefined') 
+            {
+                window.clearInterval(interval);
+            }
+            interval = setInterval(async function(){
+                updateContent(url, target, parser, replace, inselect, false);
+            }, 5000);
+            const tabsSwipe = document.querySelector('#app-tabs-swipe');
+            var instance = M.Tabs.getInstance(tabsSwipe);
+            instance.select('tab-live');
         }
     }
 });
