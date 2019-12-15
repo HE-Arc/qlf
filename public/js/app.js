@@ -148,7 +148,7 @@ function parseJsonGameTemplate(json, qlf)
         table += '<tr><th>' + rows[row].text + '</th>';
         for (let col in columns)
         {
-            table += '<td>' + scores[row][col] + '</td>';
+            table += '<td id="cell' + row + col + '" onClick="clickCell(this.id)">' + scores[row][col] + '</td>';
         }
         table += '</tr>';
     }
@@ -203,6 +203,10 @@ function getTemplates(data, qlf)
         allTemplates.push([element['id'],element['name']]);
     });
     return allTemplates;
+}
+
+function clickCell(id){
+    console.log(id)
 }
 
 document.getElementById('showModal').onclick = function triggerModal() {
