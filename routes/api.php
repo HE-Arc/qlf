@@ -35,6 +35,13 @@ Route::apiResource('gamesheets', 'GamesheetController');
 
 Route::get('getGameSheet', 'GamesheetController@getTemplatesToSelect');
 
-Route::get('getGamesUser', 'GameController@getGamesUser');
+Route::get('getGamesUser/{id}', function ($id) {
+    $games = Game::whereHas('users', function($query) use ($id) {
+        $query->where('user_id', $id);
+    })
+    ->get();
+    
+    return $games;
+});
 
 Route::get('/live', 'HomeController@gotToLive');

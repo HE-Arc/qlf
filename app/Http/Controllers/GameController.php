@@ -20,17 +20,20 @@ class GameController extends Controller
         return new GameResource($games);
     }
 
-    /**
-     * Display list of user's game
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function getGamesUser(Request $request)
+    // for now i can't get the auth->user()->id, so i m doing this in api.php, but should be done here
+    /*
+    public function getGamesUser()
     {
-        $all = Game::all();
-        return $all;
+        dd(auth()->user()->id);
+        $gamesOfThisUser = Game::whereHas('users', function($query) {
+            $query->where('user_id', auth()->user()->id);
+        })
+        ->get();
+        
+        return GameResource::collection($gamesOfThisUser);
     }
+    */
+
     /**
      * Show the form for creating a new resource.
      *

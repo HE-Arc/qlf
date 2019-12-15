@@ -228,11 +228,15 @@ document.addEventListener('submit', (evt) =>
 // On load, fetch data for market tab, user tab, ...
 document.addEventListener('DOMContentLoaded', () =>
 {
-
-    let urlGames = 'api/getGamesUser';
+    let urlGames = 'api/getGamesUser/1'; // for now, always fetching games of user with id 1. How to get the current user id ?
     let targetGames = document.querySelector('#listGames');
     let parserGames = displayGamesUser;
     let replaceGames = 'true';
-
     updateContent(urlGames, targetGames, parserGames, replaceGames);
+
+    let urlMarket = 'api/gamesheets';
+    let target = document.querySelector('#market-gamesheets');
+    let parser = parseJsonMarketTemplate;
+    let replace = 'true';
+    updateContent(urlMarket, target, parser, replace);
 });
