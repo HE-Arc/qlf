@@ -96,7 +96,6 @@ function updateContent(url, target, parser, replace = true, inselect = false, ql
             // Parses the received data
             let parsedData = parser(data, qlf);
 
-            // Overrides the target content
             if(inselect === 'true')
             {
                 $("form input").val("");
@@ -109,6 +108,7 @@ function updateContent(url, target, parser, replace = true, inselect = false, ql
 
                 $(target).formSelect();
             }
+            // Overrides the target content
             else if (replace === 'true')
             {
                 target.innerHTML = parsedData;
@@ -158,6 +158,31 @@ function stringifyForm(form)
     }
 
     return JSON.stringify(parsedData);
+}
+
+/**
+ * Clears the form inputs value
+ * @param  {[type]} form [description]
+ */
+function clearForm(form)
+{
+    let inputs = form.querySelectorAll('input, textarea');
+
+    for (let input of inputs)
+    {
+        let tagName = input.tagName;
+
+        // Input
+        if (tagName === 'INPUT')
+        {
+            input.value = '';
+        }
+        // Textarea
+        else if (tagName === 'TEXTAREA')
+        {
+            input.innerHTML = '';
+        }
+    }
 }
 
 /**
@@ -211,11 +236,24 @@ document.addEventListener('submit', (evt) =>
         let url = form.getAttribute('action');
         let method = form.getAttribute('method');
         let data = stringifyForm(form);
+        let callback = window[form.getAttribute('data-callback')];
 
-        // Submits the form data and then displays the result in a toast
+        // Submits the form data, displays the result in a toast and calls the callback
         submitForm(url, method, data, (json) =>
         {
             toastResult(json);
+
+            // Calls the callback if set
+            if (callback !== undefined)
+            {
+                callback(json);
+            }
+
+            // Clears the form inputs if data-clear is true
+            if (form.getAttribute('data-clear') === 'true')
+            {
+                clearForm(form);
+            }
         });
     }
 });
@@ -223,12 +261,10 @@ document.addEventListener('submit', (evt) =>
 // On load, fetch data for market tab, user tab, ...
 document.addEventListener('DOMContentLoaded', () =>
 {
-
     let urlMarket = 'api/gamesheets';
     let target = document.querySelector('#market-gamesheets');
     let parser = parseJsonMarketTemplate;
     let replace = 'true';
 
     updateContent(urlMarket, target, parser, replace);
-
 });

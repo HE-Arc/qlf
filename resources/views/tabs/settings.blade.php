@@ -1,72 +1,63 @@
+
 <div class="carousel-item" id="tab-settings">
     <h2 class="center">Settings</h2>
+
+    <!-- EMAIL -->
 
     <section class="section">
         <h3 class="section-title">Email</h3>
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">verified_user</i>
-                <input disabled value="quentin.vallat@he-arc.ch" id="user-email" type="text" class="validate">
+                <input disabled value="{{ Auth::user()->email }}" id="user-email" type="text">
             </div>
         </div>
     </section>
+
+    <!-- NAME -->
+
     <section class="section">
         <h3 class="section-title">Username</h3>
-        <form id="form-change-username" class="fetch-submit" action="api/changeUsername" method="POST">
+        <form class="fetch-submit" action="api/changeName" method="POST" data-callback="callback_updateUsername">
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">account_box</i>
-                    <input id="user-username" name="username" value="{{ Auth::user()->name }}" type="text" class="validate">
-                    <label for="user-username">Username</label>
+                    <input id="name" name="name" value="{{ Auth::user()->name }}" type="text" class="validate">
+                    <label for="name">Name</label>
                 </div>
-                <button class="btn pink waves-effect" type="submit">CHANGE USERNAME
+                <button class="btn pink waves-effect" type="submit">CHANGE NAME
                     <i class="material-icons right">send</i>
                 </button>
             </div>
         </form>
     </section>
+
+    <!-- PASSWORD -->
+
     <section class="section">
         <h3 class="section-title">Password</h3>
-        <form id="form-change-pw">
+        <form class="fetch-submit" action="api/changePassword" method="POST" data-clear="true">
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">vpn_key</i>
-                    <input id="user-pw-current" type="password" class="validate">
-                    <label for="user-pw-current">Current password</label>
+                    <input id="current-password" name="current-password" type="password" class="validate">
+                    <label for="current-password">Current password</label>
                 </div>
                 <div class="input-field col s12">
                     <i class="material-icons prefix">vpn_key</i>
-                    <input id="user-pw-new" type="password" class="validate">
-                    <label for="user-pw-new">New password</label>
+                    <input id="new-password" name="new-password" type="password" class="validate">
+                    <label for="new-password">New password</label>
                 </div>
                 <div class="input-field col s12">
                     <i class="material-icons prefix">vpn_key</i>
-                    <input id="user-pw-confirm" type="password" class="validate">
-                    <label for="user-pw-confirm">Confirm password</label>
+                    <input id="new-password_confirmation" name="new-password_confirmation" type="password" class="validate">
+                    <label for="new-password_confirmation">Confirm password</label>
                 </div>
-                <button class="btn pink waves-effect" type="submit" name="action">CHANGE PASSWORD
+                <button class="btn pink waves-effect" type="submit">CHANGE PASSWORD
                     <i class="material-icons right">send</i>
                 </button>
             </div>
         </form>
-    </section>
-    <section class="section">
-        <h3 class="section-title">Profile picture</h3>
-        <div class="row">
-            <img class="materialboxed" data-caption="Profile picture" width="100" src="img/pp.jpg">
-            <div class="file-field input-field">
-                <div class="btn">
-                    <span>File</span>
-                    <input type="file">
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                </div>
-            </div>
-            <button class="btn pink waves-effect" type="submit" name="action">CHANGE PICTURE
-                <i class="material-icons right">send</i>
-            </button>
-        </div>
     </section>
 
 </div>
