@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -12,6 +13,33 @@ use Illuminate\Support\Facades\Validator;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    const COOKIE_API_TOKEN_NAME = '_api_token';
+
+    // Returns an API token cookie based on the current user
+    protected function getApiTokenCookie()
+    {
+        $user = Auth::user();
+
+        // Creates the _api_token cookie
+        $token = $user->createToken('qlf')->accessToken;
+        $cookie = $this->getCookieDetails($token);
+
+        return \Cookie::make($cookie['name'],
+            $cookie['value'],
+            $cookie['minutes'],
+            $cookie['path'],
+            $cookie['domain'],
+            $cookie['secure'],
+            $cookie['httponly'],
+            $cookie['samesite']);
+    }
+
+    // Forgets the API token cookie
+    protected function forgetApiTokenCookie()
+    {
+        return \Cookie::forget(self::COOKIE_API_TOKEN_NAME);
+    }
 
     /**
      * Returns a Validator based on the given request and rules.
@@ -78,5 +106,22 @@ class Controller extends BaseController
     protected function responseError($message, $vars = [])
     {
         return $this->responseJson($message, 'ERROR', $vars);
+    }
+
+    // Returns the _api_token cookie details
+    private function getCookieDetails($token)
+    {
+        $secure = (app()->environment() == 'production' ? true : null);
+
+        return [
+            'name' => self::COOKIE_API_TOKEN_NAME,
+            'value' => $token,
+            'minutes' => 1440,
+            'path' => null,
+            'domain' => null,
+            'secure' => $secure,
+            'httponly' => true,
+            'samesite' => true,
+        ];
     }
 }

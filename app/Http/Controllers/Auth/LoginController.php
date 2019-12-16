@@ -37,21 +37,8 @@ class LoginController extends Controller
         // Successful login
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')]))
         {
-            $user = Auth::user();
-
-            // Creates the _api_token cookie
-            $token = $user->createToken('qlf')->accessToken;
-            $cookie = $this->getCookieDetails($token);
-
             return redirect('/home')
-                ->cookie($cookie['name'],
-                    $cookie['value'],
-                    $cookie['minutes'],
-                    $cookie['path'],
-                    $cookie['domain'],
-                    $cookie['secure'],
-                    $cookie['httponly'],
-                    $cookie['samesite']);
+                ->cookie($this->getApiTokenCookie());
         }
 
         // Incorrect login
@@ -63,22 +50,9 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        return redirect('/login');
+        return redirect('/login')
+            ->cookie($this->forgetApiTokenCookie());
     }
 
-    // Returns the _api_token cookie details
-    private function getCookieDetails($token)
-    {
-        return [
-            'name' => '_api_token',
-            'value' => $token,
-            'minutes' => 1440,
-            'path' => null,
-            'domain' => null,
-            //'secure' => true, //production
-            'secure' => null,   //localhost
-            'httponly' => true,
-            'samesite' => true,
-        ];
-    }
+
 }
