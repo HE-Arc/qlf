@@ -55,6 +55,23 @@ document.addEventListener('DOMContentLoaded', () =>
     // Inits form select
     var elems = document.querySelectorAll('select');
 
+    // Default fetches when authenticated
+    if (document.querySelector('body').classList.contains('app-auth'))
+    {
+        // Current games
+        let urlGames = 'api/getGamesUser';
+        let targetGames = document.querySelector('#listGames');
+        let parserGames = displayGamesUser;
+        let replaceGames = 'true';
+        updateContent(urlGames, targetGames, parserGames, replaceGames);
+
+        // Market
+        let urlMarket = 'api/gamesheets';
+        let target = document.querySelector('#market-gamesheets');
+        let parser = parseJsonMarketTemplate;
+        let replace = 'true';
+        updateContent(urlMarket, target, parser, replace);
+    }
 });
 
 /**
@@ -288,12 +305,23 @@ function displayGamesUser(data, qlf)
 }
 
 // set the onclick on the button to show the model
+
+document.addEventListener('click', (evt) =>
+{
+    if (evt.target && evt.target.id == 'showModal')
+    {
+        var Modalelem = document.querySelector('.modal');
+        var instance = M.Modal.init(Modalelem);
+        instance.open();
+    }
+});
+/*
 document.getElementById('showModal').onclick = function triggerModal() {
     var Modalelem = document.querySelector('.modal');
     var instance = M.Modal.init(Modalelem);
     instance.open();
 }
-
+*/
 
 /**
  * Returns time elapsed since a date (param)

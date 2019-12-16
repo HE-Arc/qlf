@@ -52,6 +52,7 @@
     </section>
 
     <section class="section">
+        <h2 class="sub-title">Current games</h2>
         <div id="listGames" class="collection"></div>
     </section>
 
