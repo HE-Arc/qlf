@@ -172,10 +172,12 @@ function clearForm(form)
     {
         let tagName = input.tagName;
 
+        // Input
         if (tagName === 'INPUT')
         {
             input.value = '';
         }
+        // Textarea
         else if (tagName === 'TEXTAREA')
         {
             input.innerHTML = '';
