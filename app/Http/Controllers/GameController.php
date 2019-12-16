@@ -22,8 +22,8 @@ class GameController extends Controller
     
     public function getGamesUser()
     {
-        $games = Game::whereHas('users', function($query) {
-            $query->where('user_id', Auth::user()->id);
+        $games = Game::whereHas('users', function($query){
+            $query->where('user_id',  Auth::user()->id);
         })
         ->get();
         
@@ -42,9 +42,8 @@ class GameController extends Controller
         {
             return $this->responseError($validator);
         }
-
-        $game = Game::where('name', $request->json('nameJoinGame'));
-        $game->user()->save(auth()->user()->id);
+        $game = Game::where('name', $request->json('nameJoinGame'))->first();
+        $game->users()->attach(Auth::user()->id);
 
 
         return $this->responseSuccess('Game successfully joined !');
@@ -84,6 +83,9 @@ class GameController extends Controller
         $game->scores = "{}";
 
         $game->save();
+
+        //put the auth in the player list
+        $game->users()->attach(Auth::user()->id);
 
         return $this->responseSuccess('Game successfully created !');
     }

@@ -6,7 +6,7 @@
     <!-- Modal Structure to create game -->
     <div id="formCreateGame" class="modal">
         <div class="modal-content">
-            <form method="POST" action="api/games" class="fetch-submit">
+            <form method="POST" action="api/games" class="fetch-submit" data-callback="callback_updateModalCreate">
             <div class="row">
                 <div class="input-field col s12">
                     <select name="templateChoosen" id="optionsTemplates" class="materialSelect"></select>
@@ -28,7 +28,7 @@
     <!-- Modal Structure to join a game -->
     <div id="formJoinGame" class="modal">
         <div class="modal-content">
-            <form method="POST" action="api/joinAGame" class="fetch-submit">
+            <form method="POST" action="api/joinAGame" class="fetch-submit" data-callback="callback_updateModalJoin">
             <div class="row">
                 <div class="input-field col s12">
                     <label> Name of the game </label>

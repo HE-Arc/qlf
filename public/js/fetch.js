@@ -96,6 +96,7 @@ function updateContent(url, target, parser, replace = true, inselect = false, ql
     {
         if (data)
         {
+            console.log(data)
             // Parses the received data
             let parsedData = parser(data, qlf);
 

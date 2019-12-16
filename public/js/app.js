@@ -322,3 +322,25 @@ function callback_updateUsername(json)
         headerUsername.innerHTML = usernameInput.value;
     }
 }
+
+// Updates the username in the header after modification
+function callback_updateModalCreate(json)
+{
+    if (json['status'] === 'SUCCESS')
+    {
+        var Modalelem = document.querySelector('#formCreateGame');
+        var instance = M.Modal.getInstance(Modalelem);
+        instance.close();
+    }
+}
+
+// Updates the username in the header after modification
+function callback_updateModalJoin(json)
+{
+    if (json['status'] === 'SUCCESS')
+    {
+        var Modalelem = document.querySelector('#formJoinGame');
+        var instance = M.Modal.getInstance(Modalelem);
+        instance.close();
+    }
+}
