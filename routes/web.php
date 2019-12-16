@@ -19,7 +19,3 @@ Route::middleware(['auth'])->group(function () {
     //Route::post('/gameCreate', 'GameController@store')->name('gameCreate')->middleware('auth');    
 });
 
-
-Route::resources(['games' => 'GameController']);
-
-

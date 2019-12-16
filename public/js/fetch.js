@@ -226,7 +226,7 @@ document.addEventListener('submit', (evt) =>
         let url = form.getAttribute('action');
         let method = form.getAttribute('method');
         let data = stringifyForm(form);
-
+        
         // Submits the form data and then displays the result in a toast
         submitForm(url, method, data, (json) =>
         {

@@ -6,8 +6,7 @@
     <!-- Modal Structure to create game -->
     <div id="formCreateGame" class="modal">
         <div class="modal-content">
-            <form method="POST" action="{{ url('/games') }}">
-            <meta name="csrf-token" content="{{ csrf_token() }}">
+            <form method="POST" action="api/games" class="fetch-submit">
             <div class="row">
                 <div class="input-field col s12">
                     <select name="templateChoosen" id="optionsTemplates" class="materialSelect"></select>
@@ -19,7 +18,7 @@
                 </div>
                 <div>
                     <button class="btn" type="submit" name="action">Create</button>
-                    <button class="btn"formaction="{{ route('home') }}">Cancel</button>
+                    <!-- TODO put a cancel button, and maybe close the modal when create a game -->
                 </div>
             </div>
             </form>

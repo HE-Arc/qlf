@@ -47,16 +47,26 @@ class GameController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
+        // Validation
+        $validator = $this->validateJson($request, [
+            'nameGame' => 'required',
+        ]);
+
+        // Validation fails
+        if ($validator->fails())
+        {
+            return $this->responseError($validator);
+        }
         $game = new Game;
-        $game->name = $request->nameGame;
+        $game->name = $request->json('nameGame');
         $game->user_id = auth()->user()->id;
-        $game->gamesheet_id = $request->templateChoosen;
+        $game->gamesheet_id = $request->json('templateChoosen');
         $game->scores = "{}";
 
         $game->save();
 
-        return view('home');
+        return $this->responseSuccess('Game successfully updated !');
     }
 
     /**

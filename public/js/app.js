@@ -217,7 +217,7 @@ function displayGamesUser(data, qlf)
 {
     gamesUser = "";
     data.forEach(element => {
-        gamesUser = gamesUser.concat("<a class='go-to-live collection-item fetch-update' href='api/games/", element['id'] ,"'  data-target='#json-test' data-parser='parseJsonGameTemplate' data-replace='true'>", element['name'], "</a>");
+        gamesUser = gamesUser.concat("<a class='go-to-live collection-item fetch-update fetch-sync' href='api/games/", element['id'] ,"'  data-target='#live-game' data-parser='parseJsonGameTemplate' data-replace='true'>", element['name'], "</a>");
     });
     return gamesUser;
 }
