@@ -19,41 +19,11 @@ class GameController extends Controller
         return GameResource::collection(Game::all());
     }
 
-    // get all the games belonging to the user
-    public function getGamesUser()
-    {
-        $games = Game::whereHas('users', function($query){
-            $query->where('user_id',  Auth::user()->id);
-        })
-        ->get();
-        
-        return $games;
-    }
-
-    public function joinGame(Request $request)
-    {
-        // Validation
-        $validator = $this->validateJson($request, [
-            'nameJoinGame' => 'required',
-        ]);
-
-        // Validation fails
-        if ($validator->fails())
-        {
-            return $this->responseError($validator);
-        }
-        $game = Game::where('name', $request->json('nameJoinGame'))->first();
-        $game->users()->attach(Auth::user()->id);
-
-
-        return $this->responseSuccess('Game successfully joined !');
-    }
-
     /**
      * Store a newly created game. also add the creator in the game.
      */
     public function store(Request $request)
-    { 
+    {
         // Validation
         $validator = $this->validateJson($request, [
             'nameGame' => 'required',
@@ -62,8 +32,9 @@ class GameController extends Controller
         // Validation fails
         if ($validator->fails())
         {
-            return $this->responseError($validator);
+            return $this->responseError($validator->errors()->first());
         }
+
         $game = new Game;
         $game->name = $request->json('nameGame');
         $game->user_id = auth()->user()->id;
@@ -85,11 +56,12 @@ class GameController extends Controller
                 "2": 102
             }
         }';
+
         $game->save();
 
         //put the auth in the player list
         $game->users()->attach(Auth::user()->id);
-        
+
         return $this->responseSuccess('Game successfully created !');
     }
 
@@ -117,6 +89,38 @@ class GameController extends Controller
         $game->scores = $request->json('scores');
         $game->save();
 
-        return response()->json(['status' => 'SUCCESS', 'message' => 'Game successfully updated']);
+        return $this->responseSuccess('Game successfully updated');
+    }
+
+    // get all the games belonging to the user
+    public function getGamesUser()
+    {
+        $games = Game::whereHas('users', function($query)
+        {
+            $query->where('user_id',  Auth::user()->id);
+        })
+        ->get();
+
+        return $games;
+    }
+
+    // The user joins a game
+    public function joinGame(Request $request)
+    {
+        // Validation
+        $validator = $this->validateJson($request, [
+            'nameJoinGame' => 'required',
+        ]);
+
+        // Validation fails
+        if ($validator->fails())
+        {
+            return $this->responseError($validator->errors()->first());
+        }
+
+        $game = Game::where('name', $request->json('nameJoinGame'))->first();
+        $game->users()->attach(Auth::user()->id);
+
+        return $this->responseSuccess('Game successfully joined !');
     }
 }

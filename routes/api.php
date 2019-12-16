@@ -25,29 +25,42 @@ use App\Game;
 // API authenticating protected routes
 Route::group(['middleware' => ['auth:api']], function()
 {
-    // USER
+    /**
+     * User
+     */
 
-    // current user
+    // User info
     Route::get('/user', function(Request $request)
     {
         return $request->user();
     });
 
-    Route::get('/getGamesUser', 'GameController@getGamesUser');
-    
-    Route::apiResource('games', 'GameController');
-
-    Route::post('joinAGame', 'GameController@joinGame');
     // Change username
     Route::post('changeName', 'UserController@changeName');
 
     // Change password
     Route::post('changePassword', 'UserController@changePassword');
 
+    /**
+     * Game
+     */
+
+     // Game Resource (index, store, show, update)
     Route::apiResource('games', 'GameController', [
         'only' => ['index', 'store', 'show', 'update']
     ]);
 
+    // Gets the user games
+    Route::get('/getGamesUser', 'GameController@getGamesUser');
+
+    // The user joins a game
+    Route::post('joinAGame', 'GameController@joinGame');
+
+    /**
+     * Gamesheet
+     */
+
+    // Gamesheet Resource (index, show)
     Route::apiResource('gamesheets', 'GamesheetController', [
         'only' => ['index', 'show']
     ]);
