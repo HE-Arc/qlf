@@ -25,16 +25,29 @@ class Controller extends BaseController
     }
 
     /**
+     * Returns a JSON response with the given message and status.
+     * @param  [type] $message [description]
+     * @param  [type] $status  [description]
+     * @param  array  $vars    [description]
+     * @return [type]          [description]
+     */
+    protected function responseJson($message, $status, $vars = [])
+    {
+        $json = $vars;
+        $json['status'] = $status;
+        $json['message'] = $message;
+
+        return response()->json($json, 200);
+    }
+
+    /**
      * Returns an informative response with the given message.
      * @param  [type] $message [description]
      * @return [type]          [description]
      */
-    protected function responseInfo($message)
+    protected function responseInfo($message, $vars = [])
     {
-        return response()->json([
-            'status' => 'INFO',
-            'message' => $message,
-        ], 200);
+        return $this->responseJson($message, 'INFO', $vars);
     }
 
     /**
@@ -42,12 +55,9 @@ class Controller extends BaseController
      * @param  [type] $message [description]
      * @return [type]          [description]
      */
-    protected function responseSuccess($message)
+    protected function responseSuccess($message, $vars = [])
     {
-        return response()->json([
-            'status' => 'SUCCESS',
-            'message' => $message,
-        ], 200);
+        return $this->responseJson($message, 'SUCCESS', $vars);
     }
 
     /**
@@ -55,12 +65,9 @@ class Controller extends BaseController
      * @param  [type] $message [description]
      * @return [type]          [description]
      */
-    protected function responseWarning($message)
+    protected function responseWarning($message, $vars = [])
     {
-        return response()->json([
-            'status' => 'WARNING',
-            'message' => $message,
-        ], 200);
+        return $this->responseJson($message, 'WARNING', $vars);
     }
 
     /**
@@ -68,11 +75,8 @@ class Controller extends BaseController
      * @param  [type] $validator [description]
      * @return [type]            [description]
      */
-    protected function responseError($validator)
+    protected function responseError($message, $vars = [])
     {
-        return response()->json([
-            'status' => 'ERROR',
-            'message' => $validator->errors()->first(),
-        ], 200);
+        return $this->responseJson($message, 'ERROR', $vars);
     }
 }

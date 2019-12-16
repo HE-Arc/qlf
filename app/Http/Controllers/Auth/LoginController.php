@@ -22,13 +22,6 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -38,12 +31,10 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    /**
-     * [login description]
-     * @return [type] [description]
-     */
+    // Login
     public function login()
     {
+        // Successful login
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')]))
         {
             $user = Auth::user();
@@ -52,9 +43,7 @@ class LoginController extends Controller
             $token = $user->createToken('qlf')->accessToken;
             $cookie = $this->getCookieDetails($token);
 
-            return response()
-                ->view('home')
-                // Appends the _api_token to the response
+            return redirect('/home')
                 ->cookie($cookie['name'],
                     $cookie['value'],
                     $cookie['minutes'],
@@ -64,6 +53,17 @@ class LoginController extends Controller
                     $cookie['httponly'],
                     $cookie['samesite']);
         }
+
+        // Incorrect login
+        return view('auth.login');
+    }
+
+    // Logout
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect('/login');
     }
 
     // Returns the _api_token cookie details

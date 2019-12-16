@@ -60,30 +60,30 @@ document.addEventListener('DOMContentLoaded', () =>
 /**
  * Returns a random between min and max (inclusive)
  * source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
- * 
+ *
  * @param {int} min inclusive
  * @param {int} max inclusive
  */
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
 }
 
 function parseJsonMarketTemplate(json){
     gamesheets = json.data;
-    
+
     stringGamesheets = '<div class="row">';
 
     for (let index in gamesheets){
         let gamesheet = gamesheets[index]
-        
+
         let name = gamesheet.name;
         let downloads = gamesheet.downloads;
         let created_at = gamesheet.created_at;
         let updated_at = gamesheet.updated_at;
         let creator = gamesheet.created_by.name;
-        
+
         stringGamesheets += '<div class="col s12 m3">';
         stringGamesheets += '<div class="card deep-orange lighten-4">';
         stringGamesheets += '<div class="card-image waves-effect waves-block waves-light" style="padding:10px; ">';
@@ -108,34 +108,36 @@ function parseJsonMarketTemplate(json){
     return stringGamesheets;
 }
 
+var gameObject;
+
 /**
  * Parse a game's JSON and create a table (html) with content.
  * Then, will be returned to 'updateContent', which will display it.
- * 
+ *
  * It is a generic function, but with's 'qlf' param, it will call a function to "populate" qlf website.
- * 
+ *
  * @param {string} json data, JSON of the game
  * @param {bool} qlf false for generic function, true for qlf web app
  */
 function parseJsonGameTemplate(json, qlf)
 {
-    let gameObject = json.data;
+    gameObject = json.data;
 
-    let gameName = gameObject.name;
-    let scores = JSON.parse(gameObject.scores);
-    let players = gameObject.players;
-    let gameCreationDate = new Date(gameObject.created_at);
-    let gameCreator = gameObject.created_by;
+    gameName = gameObject.name;
+    scores = JSON.parse(gameObject.scores);
+    players = gameObject.players;
+    gameCreationDate = new Date(gameObject.created_at);
+    gameCreator = gameObject.created_by;
 
     gamesheetObject = gameObject.gamesheet;
 
-    let gamesheetName = gamesheetObject.name;
-    let downloads = gamesheetObject.downloads;
-    let gamesheetCreator = gamesheetObject.created_by;
+    gamesheetName = gamesheetObject.name;
+    downloads = gamesheetObject.downloads;
+    gamesheetCreator = gamesheetObject.created_by;
     
-    let template = JSON.parse(gamesheetObject.template);
-    let columns = template.attributes.column_header;
-    let rows = template.attributes.row_header;
+    template = JSON.parse(gamesheetObject.template);
+    columns = template.attributes.column_header;
+    rows = template.attributes.row_header;
 
     let table = '<table class="responsive-table highlight"><thead><tr><th></th>';
     for (let col in columns)
@@ -149,7 +151,7 @@ function parseJsonGameTemplate(json, qlf)
         table += '<tr><th>' + rows[row].text + '</th>';
         for (let col in columns)
         {
-            table += '<td>' + scores[row][col] + '</td>';
+            table += '<td id="cell' + row + col + '" contenteditable="true" onfocusout="saveScores(this)" onfocus="interruptTimer()">' + scores[row][col] + '</td>';
         }
         table += '</tr>';
     }
@@ -172,6 +174,44 @@ function parseJsonGameTemplate(json, qlf)
 }
 
 /**
+ * PATCH the new game's score in the database.
+ * Called when a user onfocusout a tables' td.
+ * 
+ * @param {object} cell 
+ */
+function saveScores(cell){
+    row = cell.id[cell.id.length-2];
+    col = cell.id[cell.id.length-1];
+    newVal = cell.innerText;
+    scores = JSON.parse(gameObject.scores);
+    if (/^[0-9]+$/.test(String(newVal))){ //if the new input is indeed a number
+        scores[row][col] = cell.innerText;
+        gameObject.scores = JSON.stringify(scores);
+        
+        let gameToJsonify = {
+            name: gameObject.name,
+            scores: gameObject.scores
+        };
+
+        submitForm(
+            'api/games/'+String(gameObject.id), 
+            "PATCH", 
+            JSON.stringify(gameToJsonify),
+            (json) => { toastResult(JON.parse('{"status": "SUCCESS", "message": "Game successfully updated !"}'));}
+        )
+    }
+    else{
+        toast("Only integers are allowed !", TOAST.ERROR)
+        cell.innerText = scores[row][col];
+    }
+    isTimerPaused = false;
+}
+
+function interruptTimer(){
+    isTimerPaused = true;
+}
+
+/**
  * Will display infos on live tab, like game name, created by who, etc... 
  * Called if it's the first time that we load a live game. 
  * 
@@ -179,21 +219,20 @@ function parseJsonGameTemplate(json, qlf)
  */
 function displayInfos(infoObject){
     document.querySelector('#gamesheet-name').innerHTML = infoObject.gamesheetName;
-    
+
     strGamesheetInfo = "This game's template was created by " + String(infoObject.gamesheetCreator.name) + " and was downloaded more than " + String(infoObject.downloads) + " times!";
     document.querySelector('#gamesheet-info').innerHTML = strGamesheetInfo;
 
     document.querySelector('#game-name').innerHTML = infoObject.gameName;
-    
+
     strGameInfo = "Game created by " + String(infoObject.gameCreator.name) + ", " + timeSince(infoObject.gameCreationDate) + " ago.";
     document.querySelector('#game-info').innerHTML = strGameInfo;
 }
 
-
 /**
- * 
+ *
  * Fetch the gamesheets (templates) to put in modal for the creation of a game
- * 
+ *
  * @param {string} json data, JSON of the gamesheet
  * @param {bool} qlf false for generic function, true for qlf web app
  */
@@ -217,7 +256,7 @@ function displayGamesUser(data, qlf)
 {
     gamesUser = "";
     data.forEach(element => {
-        gamesUser = gamesUser.concat("<a class='go-to-live collection-item fetch-update fetch-sync' href='api/games/", element['id'] ,"'  data-target='#live-game' data-parser='parseJsonGameTemplate' data-replace='true'>", element['name'], "</a>");
+        gamesUser = gamesUser.concat("<a class='go-to-live collection-item fetch-update' href='api/games/", element['id'] ,"'  data-target='#live-game' data-parser='parseJsonGameTemplate' data-replace='true'>", element['name'], "</a>");
     });
     return gamesUser;
 }
@@ -236,7 +275,7 @@ document.getElementById('showModal').onclick = function triggerModal() {
  * 1 minute ago, 1 month ago, ...
  *
  * credit and source: https://stackoverflow.com/a/3177838
- * 
+ *
  * @param {date} date
  */
 function timeSince(date) {
@@ -265,4 +304,21 @@ function timeSince(date) {
         return interval + " minutes";
     }
     return Math.floor(seconds) + " seconds";
+}
+
+/**
+ * API CALLBACKS
+ */
+
+// Updates the username in the header after modification
+function callback_updateUsername(json)
+{
+    // Updates the header username only on SUCCESS status
+    if (json['status'] === 'SUCCESS')
+    {
+        let headerUsername = document.querySelector('#user-username');
+        let usernameInput = document.querySelector('#name');
+
+        headerUsername.innerHTML = usernameInput.value;
+    }
 }

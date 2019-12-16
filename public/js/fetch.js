@@ -99,7 +99,6 @@ function updateContent(url, target, parser, replace = true, inselect = false, ql
             // Parses the received data
             let parsedData = parser(data, qlf);
 
-            // Overrides the target content
             if(inselect === 'true')
             {
                 $("form input").val("");
@@ -112,6 +111,7 @@ function updateContent(url, target, parser, replace = true, inselect = false, ql
 
                 $(target).formSelect();
             }
+            // Overrides the target content
             else if (replace === 'true')
             {
                 target.innerHTML = parsedData;
@@ -164,6 +164,31 @@ function stringifyForm(form)
 }
 
 /**
+ * Clears the form inputs value
+ * @param  {[type]} form [description]
+ */
+function clearForm(form)
+{
+    let inputs = form.querySelectorAll('input, textarea');
+
+    for (let input of inputs)
+    {
+        let tagName = input.tagName;
+
+        // Input
+        if (tagName === 'INPUT')
+        {
+            input.value = '';
+        }
+        // Textarea
+        else if (tagName === 'TEXTAREA')
+        {
+            input.innerHTML = '';
+        }
+    }
+}
+
+/**
  * Displays the request status with a message in a Toast
  * @param  {[JSON]} json [description]
  */
@@ -174,6 +199,8 @@ function toastResult(json)
 
     toast(message, TOAST[status]);
 }
+
+var isTimerPaused = false;
 
 // Click on an element with the fetch-update class
 document.addEventListener('click', (evt) =>
@@ -190,13 +217,6 @@ document.addEventListener('click', (evt) =>
 
         updateContent(url, target, parser, replace, inselect, true);
 
-        if (evt.target.classList.contains('fetch-sync'))
-        {
-            interval = setInterval(async function(){
-                updateContent(url, target, parser, replace, inselect, false);
-            }, 5000);
-        }
-
         // "go-to-live" define the list of games of a user. When we click on it,
         // we need to stop the interval if exists, start a new one and go to live
         if (evt.target.classList.contains('go-to-live'))
@@ -206,7 +226,9 @@ document.addEventListener('click', (evt) =>
                 window.clearInterval(interval);
             }
             interval = setInterval(async function(){
-                updateContent(url, target, parser, replace, inselect, false);
+                if(!isTimerPaused){
+                    updateContent(url, target, parser, replace, inselect, false);
+                }
             }, 5000);
             const tabsSwipe = document.querySelector('#app-tabs-swipe');
             var instance = M.Tabs.getInstance(tabsSwipe);
@@ -226,11 +248,24 @@ document.addEventListener('submit', (evt) =>
         let url = form.getAttribute('action');
         let method = form.getAttribute('method');
         let data = stringifyForm(form);
-        
-        // Submits the form data and then displays the result in a toast
+        let callback = window[form.getAttribute('data-callback')];
+
+        // Submits the form data, displays the result in a toast and calls the callback
         submitForm(url, method, data, (json) =>
         {
             toastResult(json);
+
+            // Calls the callback if set
+            if (callback !== undefined)
+            {
+                callback(json);
+            }
+
+            // Clears the form inputs if data-clear is true
+            if (form.getAttribute('data-clear') === 'true')
+            {
+                clearForm(form);
+            }
         });
     }
 });

@@ -121,7 +121,11 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        //
+        $game->name = $request->json('name');
+        $game->scores = $request->json('scores');
+        $game->save();
+
+        return response()->json(['status' => 'SUCCESS', 'message' => 'Game successfully updated']);
     }
 
     /**

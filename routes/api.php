@@ -40,10 +40,13 @@ Route::group(['middleware' => ['auth:api']], function()
     });
 
     Route::get('/getGamesUser', 'GameController@getGamesUser');
-
-    Route::post('changeUsername', 'UserController@changeUsername');
     
     Route::apiResource('games', 'GameController');
 
     Route::post('joinAGame', 'GameController@joinGame');
+    // Change username
+    Route::post('changeName', 'UserController@changeName');
+
+    // Change password
+    Route::post('changePassword', 'UserController@changePassword');
 });
