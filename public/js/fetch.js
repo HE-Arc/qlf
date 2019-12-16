@@ -59,7 +59,7 @@ function submitForm(url, method, data, callback)
             'X-CSRF-TOKEN': getCsrfToken(),
         },
     };
-
+    
     fetch(url, options)
         .then((response) =>
         {
@@ -96,7 +96,6 @@ function updateContent(url, target, parser, replace = true, inselect = false, ql
     {
         if (data)
         {
-            console.log(data)
             // Parses the received data
             let parsedData = parser(data, qlf);
 

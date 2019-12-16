@@ -80,14 +80,29 @@ class GameController extends Controller
         $game->name = $request->json('nameGame');
         $game->user_id = auth()->user()->id;
         $game->gamesheet_id = $request->json('templateChoosen');
-        $game->scores = "{}";
-
+        $game->scores = '{
+            "0": {
+                "0": 17,
+                "1": 7,
+                "2": 2
+            },
+            "1": {
+                "0": 53,
+                "1": 22,
+                "2": 33
+            },
+            "2": {
+                "0": 22,
+                "1": 101,
+                "2": 102
+            }
+        }';
         $game->save();
 
         //put the auth in the player list
         $game->users()->attach(Auth::user()->id);
-
-        return $this->responseSuccess('Game successfully created !');
+        //return $this->responseSuccess('Game successfully created !');
+        return response()->json(['status' => 'SUCCESS', 'message' => 'Game successfully created', 'gameid' => $game->id]);
     }
 
     /**

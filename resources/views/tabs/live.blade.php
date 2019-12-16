@@ -8,4 +8,6 @@
 
     <!-- TMP: TEST EXAMPLE -->
     <div id="live-game"></div>
+
+    <button class="btn fetch-update fetch-sync" href="api/games/1" data-target="#live-game" data-parser="parseJsonGameTemplate" data-replace="true">Fetch !</button>
 </div>

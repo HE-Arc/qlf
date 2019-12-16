@@ -121,8 +121,8 @@ var gameObject;
  */
 function parseJsonGameTemplate(json, qlf)
 {
-    gameObject = json.data;
 
+    gameObject = json.data;
     gameName = gameObject.name;
     scores = JSON.parse(gameObject.scores);
     players = gameObject.players;
@@ -331,6 +331,9 @@ function callback_updateModalCreate(json)
         var Modalelem = document.querySelector('#formCreateGame');
         var instance = M.Modal.getInstance(Modalelem);
         instance.close();
+        var str = 'api/games/';
+        var id = str.concat(json['gameid']);
+        parseJsonGameTemplate(id);
     }
 }
 
