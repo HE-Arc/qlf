@@ -22,10 +22,6 @@ use App\Game;
 |
 */
 
-Route::get('/user', function () {
-    return new UserResource(User::find(1));
-});
-
 // TEST FOR THE ANDROID APP
 Route::get('apiExample', 'GamesheetController@getExample');
 
@@ -35,13 +31,25 @@ Route::apiResource('gamesheets', 'GamesheetController');
 
 Route::get('getGameSheet', 'GamesheetController@getTemplatesToSelect');
 
-Route::get('getGamesUser/{id}', function ($id) {
-    $games = Game::whereHas('users', function($query) use ($id) {
-        $query->where('user_id', $id);
-    })
-    ->get();
-    
-    return $games;
-});
-
 Route::get('/live', 'HomeController@gotToLive');
+// API authenticating protected routes
+Route::group(['middleware' => ['auth:api']], function()
+{
+    Route::get('/user', function(Request $request)
+    {
+        return $request->user();
+    });
+
+    Route::get('getGamesUser', function () {
+        $id = Auth::user()->id;
+        
+        $games = Game::whereHas('users', function($query) use ($id) {
+            $query->where('user_id', $id);
+        })
+        ->get();
+        
+        return $games;
+    });
+
+    Route::post('changeUsername', 'UserController@changeUsername');
+});

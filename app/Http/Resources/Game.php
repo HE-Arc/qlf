@@ -24,7 +24,7 @@ class Game extends JsonResource
             'updated_at' => $this->updated_at,
             'gamesheet' => new GamesheetResource(Gamesheet::find($this->gamesheet_id)),
             'players' => $this->users,
-            'created_by' => $this->created_by,
+            'created_by' => $this->createdBy,
         ];
     }
 }

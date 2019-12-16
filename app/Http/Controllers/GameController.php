@@ -15,9 +15,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        $games = Game::all();
-
-        return new GameResource($games);
+        return GameResource::collection(Game::all());
     }
 
     // for now i can't get the auth->user()->id, so i m doing this in api.php, but should be done here

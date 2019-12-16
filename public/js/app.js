@@ -70,6 +70,44 @@ function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
 }
 
+function parseJsonMarketTemplate(json){
+    gamesheets = json.data;
+    
+    stringGamesheets = '<div class="row">';
+
+    for (let index in gamesheets){
+        let gamesheet = gamesheets[index]
+        
+        let name = gamesheet.name;
+        let downloads = gamesheet.downloads;
+        let created_at = gamesheet.created_at;
+        let updated_at = gamesheet.updated_at;
+        let creator = gamesheet.created_by.name;
+        
+        stringGamesheets += '<div class="col s12 m3">';
+        stringGamesheets += '<div class="card deep-orange lighten-4">';
+        stringGamesheets += '<div class="card-image waves-effect waves-block waves-light" style="padding:10px; ">';
+        stringGamesheets += '<img class="activator" src="img/games.png">';
+        stringGamesheets += '</div>';
+        stringGamesheets += '<div class="card-content">';
+        stringGamesheets += '<span class="card-title activator red-text text-darken-3" style="font-weight: bold">' + String(name) + '<i class="material-icons right">more_vert</i></span>';
+        stringGamesheets += '</div>';
+        stringGamesheets += '<div class="card-reveal grey-text text-darken-4 deep-orange lighten-4" style="font-style: italic;">';
+        stringGamesheets += '<span class="card-title red-text text-darken-3" style="font-weight: bold; font-style: normal;">' + String(name) + '<i class="material-icons right">close</i></span>';
+        stringGamesheets += '<p>Simple description.</p>';
+        stringGamesheets += '<p>Downloaded more than ' + String(downloads) + ' times on mobile devices!</p>';
+        stringGamesheets += '<p>Game created ' + String(timeSince(new Date(created_at))) + ' ago, by ' + String(creator) + '.</p>';
+        stringGamesheets += '<p></p>';
+        stringGamesheets += '</div>';
+        stringGamesheets += '</div>';
+        stringGamesheets += '</div>';
+    }
+
+    stringGamesheets += '</div>';
+
+    return stringGamesheets;
+}
+
 /**
  * Parse a game's JSON and create a table (html) with content.
  * Then, will be returned to 'updateContent', which will display it.
@@ -99,7 +137,7 @@ function parseJsonGameTemplate(json, qlf)
     let columns = template.attributes.column_header;
     let rows = template.attributes.row_header;
 
-    let table = '<table><thead><tr><th></th>';
+    let table = '<table class="responsive-table highlight"><thead><tr><th></th>';
     for (let col in columns)
     {
         table += '<th>' + players[col].name + '</th>';
@@ -133,6 +171,12 @@ function parseJsonGameTemplate(json, qlf)
     return table;
 }
 
+/**
+ * Will display infos on live tab, like game name, created by who, etc... 
+ * Called if it's the first time that we load a live game. 
+ * 
+ * @param {object} infoObject 
+ */
 function displayInfos(infoObject){
     document.querySelector('#gamesheet-name').innerHTML = infoObject.gamesheetName;
     
