@@ -12,14 +12,14 @@
     </section>
     <section class="section">
         <h3 class="section-title">Username</h3>
-        <form id="form-change-username">
+        <form id="form-change-username" class="fetch-submit" action="api/changeUsername" method="POST">
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">account_box</i>
-                    <input id="user-username" value="qlf" type="text" class="validate">
+                    <input id="user-username" name="username" value="{{ Auth::user()->name }}" type="text" class="validate">
                     <label for="user-username">Username</label>
                 </div>
-                <button class="btn pink waves-effect" type="submit" name="action">CHANGE USERNAME
+                <button class="btn pink waves-effect" type="submit">CHANGE USERNAME
                     <i class="material-icons right">send</i>
                 </button>
             </div>

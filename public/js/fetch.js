@@ -13,7 +13,16 @@ if (!window.fetch)
  */
 function get(url, callback)
 {
-    fetch(url)
+    let options = {
+        creditentials: 'same-origin',
+        headers:
+        {
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': getCsrfToken(),
+        },
+    };
+
+    fetch(url, options)
         .then((response) =>
         {
             return response.json();
@@ -38,15 +47,17 @@ function get(url, callback)
  */
 function submitForm(url, method, data, callback)
 {
-    fetch(url,
-        {
-            method: method,
-            headers:
-            {
-                'X-CSRF-TOKEN': getCsrfToken(),
-            },
-            body: data,
-        })
+    let options = {
+        method: method,
+        credentials: 'same-origin',
+        body: data,
+        headers: {
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': getCsrfToken(),
+        },
+    };
+
+    fetch(url, options)
         .then((response) =>
         {
             return response.json();

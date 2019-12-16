@@ -38,6 +38,13 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+
+            /**
+             * Added
+             */
+            \App\Http\Middleware\EncryptCookies::class,
+            \App\Http\Middleware\AddAuthHeader::class,
+
             'throttle:60,1',
             'bindings',
         ],
@@ -73,6 +80,12 @@ class Kernel extends HttpKernel
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+
+        /**
+         * Added
+         */
+        \App\Http\Middleware\AddAuthHeader::class,
+
         \App\Http\Middleware\Authenticate::class,
         \Illuminate\Routing\Middleware\ThrottleRequests::class,
         \Illuminate\Session\Middleware\AuthenticateSession::class,
