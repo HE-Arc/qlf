@@ -208,12 +208,9 @@ document.addEventListener('click', (evt) =>
             interval = setInterval(async function(){
                 updateContent(url, target, parser, replace, inselect, false);
             }, 5000);
-<<<<<<< HEAD
             const tabsSwipe = document.querySelector('#app-tabs-swipe');
             var instance = M.Tabs.getInstance(tabsSwipe);
             instance.select('tab-live');
-=======
->>>>>>> dev
         }
     }
 });
@@ -242,7 +239,7 @@ document.addEventListener('submit', (evt) =>
 // On load, fetch data for market tab, user tab, ...
 document.addEventListener('DOMContentLoaded', () =>
 {
-    let urlGames = 'api/getGamesUser/1'; // for now, always fetching games of user with id 1. How to get the current user id ?
+    let urlGames = 'api/getGamesUser'; 
     let targetGames = document.querySelector('#listGames');
     let parserGames = displayGamesUser;
     let replaceGames = 'true';

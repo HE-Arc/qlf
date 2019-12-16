@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Game;
 use Illuminate\Http\Request;
 use App\Http\Resources\Game as GameResource;
+use Auth;
 
 class GameController extends Controller
 {
@@ -18,19 +19,16 @@ class GameController extends Controller
         return GameResource::collection(Game::all());
     }
 
-    // for now i can't get the auth->user()->id, so i m doing this in api.php, but should be done here
-    /*
+    
     public function getGamesUser()
     {
-        dd(auth()->user()->id);
-        $gamesOfThisUser = Game::whereHas('users', function($query) {
-            $query->where('user_id', auth()->user()->id);
+        $games = Game::whereHas('users', function($query) {
+            $query->where('user_id', Auth::user()->id);
         })
         ->get();
         
-        return GameResource::collection($gamesOfThisUser);
+        return $games;
     }
-    */
 
     /**
      * Show the form for creating a new resource.

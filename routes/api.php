@@ -40,16 +40,7 @@ Route::group(['middleware' => ['auth:api']], function()
         return $request->user();
     });
 
-    Route::get('getGamesUser', function () {
-        $id = Auth::user()->id;
-        
-        $games = Game::whereHas('users', function($query) use ($id) {
-            $query->where('user_id', $id);
-        })
-        ->get();
-        
-        return $games;
-    });
+    Route::get('/getGamesUser', 'GameController@getGamesUser');
 
     Route::post('changeUsername', 'UserController@changeUsername');
 });
