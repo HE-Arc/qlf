@@ -64,6 +64,20 @@ class LoginController extends Controller
                     $cookie['httponly'],
                     $cookie['samesite']);
         }
+
+        return view('auth.login');
+    }
+
+    /**
+     * [logout description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect('/login');
     }
 
     // Returns the _api_token cookie details

@@ -39,5 +39,9 @@ Route::group(['middleware' => ['auth:api']], function()
         return $request->user();
     });
 
-    Route::post('changeUsername', 'UserController@changeUsername');
+    // Change username
+    Route::post('changeName', 'UserController@changeName');
+
+    // Change password
+    Route::post('changePassword', 'UserController@changePassword');
 });

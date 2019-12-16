@@ -6,7 +6,7 @@
 
                         <ul class="right">
                             @auth
-                                <li>
+                                <li id="user-username">
                                     {{ Auth::user()->name }}
                                 </li>
                             @endauth
@@ -29,7 +29,7 @@
                                     </li>
                                     @auth
                                         <li>
-                                            <a 
+                                            <a
                                                 href="{{ route('logout') }}"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                             >

@@ -17,6 +17,7 @@ class GamesheetController extends Controller
      */
     public function index()
     {
+        $user_id = Auth::$user->id;
         return GamesheetResource::collection(Gamesheet::all());
     }
 
