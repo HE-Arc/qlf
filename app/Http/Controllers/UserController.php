@@ -20,7 +20,7 @@ class UserController extends Controller
         // Validation fails
         if ($validator->fails())
         {
-            return $this->responseError($validator);
+            return $this->responseError($validator->errors()->first());
         }
 
         $name = $request->json('name');
@@ -46,7 +46,7 @@ class UserController extends Controller
         // Validation fails
         if ($validator->fails())
         {
-            return $this->responseError($validator);
+            return $this->responseError($validator->errors()->first());
         }
 
         $user = Auth::user();
