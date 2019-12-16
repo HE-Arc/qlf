@@ -107,6 +107,8 @@ function parseJsonMarketTemplate(json){
     return stringGamesheets;
 }
 
+var gameObject;
+
 /**
  * Parse a game's JSON and create a table (html) with content.
  * Then, will be returned to 'updateContent', which will display it.
@@ -118,23 +120,23 @@ function parseJsonMarketTemplate(json){
  */
 function parseJsonGameTemplate(json, qlf)
 {
-    let gameObject = json.data;
+    gameObject = json.data;
 
-    let gameName = gameObject.name;
-    let scores = JSON.parse(gameObject.scores);
-    let players = gameObject.players;
-    let gameCreationDate = new Date(gameObject.created_at);
-    let gameCreator = gameObject.created_by;
+    gameName = gameObject.name;
+    scores = JSON.parse(gameObject.scores);
+    players = gameObject.players;
+    gameCreationDate = new Date(gameObject.created_at);
+    gameCreator = gameObject.created_by;
 
     gamesheetObject = gameObject.gamesheet;
 
-    let gamesheetName = gamesheetObject.name;
-    let downloads = gamesheetObject.downloads;
-    let gamesheetCreator = gamesheetObject.created_by;
+    gamesheetName = gamesheetObject.name;
+    downloads = gamesheetObject.downloads;
+    gamesheetCreator = gamesheetObject.created_by;
     
-    let template = JSON.parse(gamesheetObject.template);
-    let columns = template.attributes.column_header;
-    let rows = template.attributes.row_header;
+    template = JSON.parse(gamesheetObject.template);
+    columns = template.attributes.column_header;
+    rows = template.attributes.row_header;
 
     let table = '<table class="responsive-table highlight"><thead><tr><th></th>';
     for (let col in columns)
@@ -148,7 +150,7 @@ function parseJsonGameTemplate(json, qlf)
         table += '<tr><th>' + rows[row].text + '</th>';
         for (let col in columns)
         {
-            table += '<td id="cell' + row + col + '" onClick="clickCell(this.id)">' + scores[row][col] + '</td>';
+            table += '<td id="cell' + row + col + '" contenteditable="true" onfocusout="saveScores(this)" onfocus="interruptTimer()">' + scores[row][col] + '</td>';
         }
         table += '</tr>';
     }
@@ -168,6 +170,44 @@ function parseJsonGameTemplate(json, qlf)
     }
 
     return table;
+}
+
+/**
+ * PATCH the new game's score in the database.
+ * Called when a user onfocusout a tables' td.
+ * 
+ * @param {object} cell 
+ */
+function saveScores(cell){
+    row = cell.id[cell.id.length-2];
+    col = cell.id[cell.id.length-1];
+    newVal = cell.innerText;
+    scores = JSON.parse(gameObject.scores);
+    if (/^[0-9]+$/.test(String(newVal))){ //if the new input is indeed a number
+        scores[row][col] = cell.innerText;
+        gameObject.scores = JSON.stringify(scores);
+        
+        let gameToJsonify = {
+            name: gameObject.name,
+            scores: gameObject.scores
+        };
+
+        submitForm(
+            'api/games/'+String(gameObject.id), 
+            "PATCH", 
+            JSON.stringify(gameToJsonify),
+            (json) => { toastResult(JON.parse('{"status": "SUCCESS", "message": "Game successfully updated !"}'));}
+        )
+    }
+    else{
+        toast("Only integers are allowed !", TOAST.ERROR)
+        cell.innerText = scores[row][col];
+    }
+    isTimerPaused = false;
+}
+
+function interruptTimer(){
+    isTimerPaused = true;
 }
 
 /**
@@ -203,10 +243,6 @@ function getTemplates(data, qlf)
         allTemplates.push([element['id'],element['name']]);
     });
     return allTemplates;
-}
-
-function clickCell(id){
-    console.log(id)
 }
 
 document.getElementById('showModal').onclick = function triggerModal() {

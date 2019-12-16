@@ -172,6 +172,8 @@ function toastResult(json)
     toast(message, TOAST[status]);
 }
 
+var isTimerPaused = false;
+
 // Click on an element with the fetch-update class
 document.addEventListener('click', (evt) =>
 {
@@ -190,7 +192,9 @@ document.addEventListener('click', (evt) =>
         if (evt.target.classList.contains('fetch-sync'))
         {
             setInterval(async function(){
-                updateContent(url, target, parser, replace, inselect, false);
+                if(!isTimerPaused){
+                    updateContent(url, target, parser, replace, inselect, false);
+                }
             }, 5000);
         }
     }
