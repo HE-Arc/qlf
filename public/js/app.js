@@ -154,7 +154,6 @@ function parseJsonGameTemplate(json, qlf)
         }
     }
     
-    console.log(template);
     if (template.total){ // if the template has '"total": "true"', display totals at bottom of table
         
         // creating the array of all totals
