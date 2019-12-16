@@ -18,7 +18,6 @@
                 </div>
                 <div>
                     <button class="btn" type="submit" name="action">Create</button>
-                    <!-- TODO put a cancel button, and maybe close the modal when create a game -->
                 </div>
             </div>
             </form>

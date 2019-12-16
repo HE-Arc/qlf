@@ -77,17 +77,17 @@ class GamesheetsTableSeeder extends Seeder
                 "row_header": {
                   "0": {
                     "id": 0,
-                    "text": "Round 1 y",
+                    "text": "Game 1",
                     "editable": false
                   },
                   "1": {
                     "id": 1,
-                    "text": "Round 2 y",
+                    "text": "Game 2",
                     "editable": false
                   },
                   "2": {
                     "id": 2,
-                    "text": "Final Round y",
+                    "text": "Game 3",
                     "editable": true
                   }
                 }

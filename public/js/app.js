@@ -158,6 +158,10 @@ function parseJsonGameTemplate(json, qlf)
         table += '<tr><th>' + rows[row].text + '</th>';
         for (let col in columns)
         {
+            console.log(scores);
+            console.log(row);
+            console.log(col);
+            console.log(scores[row]);
             table += '<td id="cell' + row + col + '" contenteditable="true" onfocusout="saveScores(this)" onfocus="interruptTimer()">' + scores[row][col] + '</td>';
         }
     }
@@ -169,7 +173,7 @@ function parseJsonGameTemplate(json, qlf)
         for (let indexC in columns){
             let tot = 0;
             for (let indexR in rows){
-                tot += parseInt(scores[indexR][indexC]);
+                tot += parseInt(scores[indexR][indexC]) || 0;
             }
             total.push(tot);
         }
@@ -365,11 +369,11 @@ function callback_updateModalCreate(json)
         var instance = M.Modal.getInstance(Modalelem);
         instance.close();
 
-    let urlGames = 'api/getGamesUser'; 
-    let targetGames = document.querySelector('#listGames');
-    let parserGames = displayGamesUser;
-    let replaceGames = 'true';
-    updateContent(urlGames, targetGames, parserGames, replaceGames);
+        let urlGames = 'api/getGamesUser'; 
+        let targetGames = document.querySelector('#listGames');
+        let parserGames = displayGamesUser;
+        let replaceGames = 'true';
+        updateContent(urlGames, targetGames, parserGames, replaceGames);
     }
 }
 
