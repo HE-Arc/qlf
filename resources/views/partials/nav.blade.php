@@ -12,7 +12,7 @@
                         </li>
                     @endauth
                     @guest
-                        <li>
+                        <li id="user-username">
                             Not connected
                         </li>
                     @endguest

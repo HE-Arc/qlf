@@ -84,7 +84,7 @@ function parseJsonMarketTemplate(json){
         let updated_at = gamesheet.updated_at;
         let creator = gamesheet.created_by.name;
 
-        stringGamesheets += '<div class="col s12 m3">';
+        stringGamesheets += '<div class="col l3 m4 s6">';
         stringGamesheets += '<div class="card deep-orange lighten-4">';
         stringGamesheets += '<div class="card-image waves-effect waves-block waves-light" style="padding:10px; ">';
         stringGamesheets += '<img class="activator" src="img/games.png">';
@@ -134,7 +134,7 @@ function parseJsonGameTemplate(json, qlf)
     gamesheetName = gamesheetObject.name;
     downloads = gamesheetObject.downloads;
     gamesheetCreator = gamesheetObject.created_by;
-    
+
     template = JSON.parse(gamesheetObject.template);
     columns = players;
     rows = template.attributes.row_header;
@@ -154,9 +154,9 @@ function parseJsonGameTemplate(json, qlf)
             table += '<td id="cell' + row + col + '" contenteditable="true" onfocusout="saveScores(this)" onfocus="interruptTimer()">' + scores[row][col] + '</td>';
         }
     }
-    
+
     if (template.total){ // if the template has '"total": "true"', display totals at bottom of table
-        
+
         // creating the array of all totals
         total = [];
         for (let indexC in columns){
@@ -196,8 +196,8 @@ function parseJsonGameTemplate(json, qlf)
 /**
  * PATCH the new game's score in the database.
  * Called when a user onfocusout a tables' td.
- * 
- * @param {object} cell 
+ *
+ * @param {object} cell
  */
 function saveScores(cell){
     row = cell.id[cell.id.length-2];
@@ -208,15 +208,15 @@ function saveScores(cell){
         if (/^[0-9]+$/.test(String(newVal))){ //if the new input is indeed a number
             scores[row][col] = newVal;
             gameObject.scores = JSON.stringify(scores);
-            
+
             let gameToJsonify = {
                 name: gameObject.name,
                 scores: gameObject.scores
             };
-    
+
             submitForm(
-                'api/games/'+String(gameObject.id), 
-                "PATCH", 
+                'api/games/'+String(gameObject.id),
+                "PATCH",
                 JSON.stringify(gameToJsonify),
                 (json) => { toastResult(JSON.parse('{"status": "SUCCESS", "message": "Game successfully updated !"}'));}
             )
@@ -238,10 +238,10 @@ function interruptTimer(){
 }
 
 /**
- * Will display infos on live tab, like game name, created by who, etc... 
- * Called if it's the first time that we load a live game. 
- * 
- * @param {object} infoObject 
+ * Will display infos on live tab, like game name, created by who, etc...
+ * Called if it's the first time that we load a live game.
+ *
+ * @param {object} infoObject
  */
 function displayInfos(infoObject){
     document.querySelector('#gamesheet-name').innerHTML = infoObject.gamesheetName;
@@ -272,9 +272,9 @@ function getTemplates(data, qlf)
 }
 
 /**
- * 
+ *
  * Fetch the gamesheets (templates) to put in modal for the creation of a game
- * 
+ *
  * @param {string} json data, JSON of the gamesheet
  * @param {bool} qlf false for generic function, true for qlf web app
  */
@@ -358,7 +358,7 @@ function callback_updateModalCreate(json)
         var instance = M.Modal.getInstance(Modalelem);
         instance.close();
 
-    let urlGames = 'api/getGamesUser'; 
+    let urlGames = 'api/getGamesUser';
     let targetGames = document.querySelector('#listGames');
     let parserGames = displayGamesUser;
     let replaceGames = 'true';
@@ -375,7 +375,7 @@ function callback_updateModalJoin(json)
         var instance = M.Modal.getInstance(Modalelem);
         instance.close();
     }
-    let urlGames = 'api/getGamesUser'; 
+    let urlGames = 'api/getGamesUser';
     let targetGames = document.querySelector('#listGames');
     let parserGames = displayGamesUser;
     let replaceGames = 'true';

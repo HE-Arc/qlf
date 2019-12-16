@@ -1,14 +1,24 @@
 
 <div id="modal-help" class="modal">
     <div class="modal-content">
-        <h4>Help</h4>
-        <p>Anim nulla id adipisicing magna mollit consectetur culpa non est mollit deserunt excepteur minim. Nisi et non velit ea ea fugiat dolor reprehenderit ullamco in amet eiusmod duis nostrud excepteur. Reprehenderit mollit in minim elit minim quis exercitation culpa aute. Elit sit cillum id ex amet aute officia est duis ea pariatur. Dolore in laboris mollit voluptate quis dolore dolor laborum cupidatat eiusmod amet proident sit elit consectetur. In minim pariatur est esse excepteur veniam nostrud consequat est irure aute commodo quis.</p>
+        <div class="center">
+            <h4 class="modal-title">Help</h4>
+            <p>You have to create an account in order to use this application.</p>
+            <p>To join a game, enter the name of the game created by your friend.</p>
+        </div>
     </div>
 </div>
 
 <div id="modal-about" class="modal">
     <div class="modal-content">
-        <h4>About</h4>
-        <p>Anim nulla id adipisicing magna mollit consectetur culpa non est mollit deserunt excepteur minim. Nisi et non velit ea ea fugiat dolor reprehenderit ullamco in amet eiusmod duis nostrud excepteur. Reprehenderit mollit in minim elit minim quis exercitation culpa aute. Elit sit cillum id ex amet aute officia est duis ea pariatur. Dolore in laboris mollit voluptate quis dolore dolor laborum cupidatat eiusmod amet proident sit elit consectetur. In minim pariatur est esse excepteur veniam nostrud consequat est irure aute commodo quis.</p>
+        <div class="center">
+            <h4 class="modal-title">About</h4>
+            <p>qfl 2019</p>
+            <p>Web Development Project</p>
+            <p>Haute-École ARC, Neuchâtel</p>
+            <p>Bouthiller de Baumont François</p>
+            <p>Jurasz Loïc</p>
+            <p>Vallat Quentin</p>
+        </div>
     </div>
 </div>
