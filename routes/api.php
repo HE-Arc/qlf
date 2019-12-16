@@ -22,18 +22,12 @@ use App\Game;
 |
 */
 
-// TEST FOR THE ANDROID APP
-Route::get('apiExample', 'GamesheetController@getExample');
-
-Route::apiResource('games', 'GameController');
-
-Route::apiResource('gamesheets', 'GamesheetController');
-
-Route::get('getGameSheet', 'GamesheetController@getTemplatesToSelect');
-
 // API authenticating protected routes
 Route::group(['middleware' => ['auth:api']], function()
 {
+    // USER
+
+    // current user
     Route::get('/user', function(Request $request)
     {
         return $request->user();
@@ -44,4 +38,12 @@ Route::group(['middleware' => ['auth:api']], function()
 
     // Change password
     Route::post('changePassword', 'UserController@changePassword');
+
+    Route::apiResource('games', 'GameController', [
+        'only' => ['index', 'store', 'show', 'update']
+    ]);
+
+    Route::apiResource('gamesheets', 'GamesheetController', [
+        'only' => ['index', 'show']
+    ]);
 });

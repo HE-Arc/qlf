@@ -265,7 +265,7 @@ function displayInfos(infoObject){
 function getTemplates(data, qlf)
 {
     var allTemplates = [];
-    data.forEach(element => {
+    data.data.forEach(element => {
         allTemplates.push([element['id'],element['name']]);
     });
     return allTemplates;
