@@ -44,4 +44,6 @@ Route::group(['middleware' => ['auth:api']], function()
     Route::post('changeUsername', 'UserController@changeUsername');
     
     Route::apiResource('games', 'GameController');
+
+    Route::post('joinAGame', 'GameController@joinGame');
 });

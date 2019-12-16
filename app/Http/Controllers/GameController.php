@@ -30,6 +30,25 @@ class GameController extends Controller
         return $games;
     }
 
+    public function joinGame(Request $request)
+    {
+        // Validation
+        $validator = $this->validateJson($request, [
+            'nameJoinGame' => 'required',
+        ]);
+
+        // Validation fails
+        if ($validator->fails())
+        {
+            return $this->responseError($validator);
+        }
+
+        $game = Game::where('name', $request->json('nameJoinGame'));
+        $game->user()->save(auth()->user()->id);
+
+
+        return $this->responseSuccess('Game successfully joined !');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -66,7 +85,7 @@ class GameController extends Controller
 
         $game->save();
 
-        return $this->responseSuccess('Game successfully updated !');
+        return $this->responseSuccess('Game successfully created !');
     }
 
     /**

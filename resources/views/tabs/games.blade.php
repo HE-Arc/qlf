@@ -25,11 +25,28 @@
         </div>
     </div>
     
+    <!-- Modal Structure to join a game -->
+    <div id="formJoinGame" class="modal">
+        <div class="modal-content">
+            <form method="POST" action="api/joinAGame" class="fetch-submit">
+            <div class="row">
+                <div class="input-field col s12">
+                    <label> Name of the game </label>
+                    <input id="nameJoinGame" type="text" name="nameJoinGame">
+                </div>
+                <div>
+                    <button class="btn" type="submit" name="action">Join</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal Trigger to create a game -->
     <button id="showModal" class="btn fetch-update" href="api/getGameSheet" data-target="#optionsTemplates" data-parser="getTemplates" data-replace="false" data-inselect="true">Create a game !</button>
 
      <!-- Button to join a game -->
-    <button id="" class="btn fetch-update" href="" data-target="" data-parser="" data-replace="" data-inselect="">Join a game !</button>
+    <button id="showModalJoin" class="btn modal-trigger" data-target="formJoinGame">Join a game !</button>
     
     <br>
     <div class="collection" id="listGames">
