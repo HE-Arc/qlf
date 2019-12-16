@@ -56,6 +56,10 @@ document.addEventListener('DOMContentLoaded', () =>
     var elems = document.querySelectorAll('select');
 });
 
+function randomDice(){
+    toastResult(JSON.parse('{"status": "INFO", "message": "You rolled a ' + getRandomIntInclusive(1,6) + '"}'));
+}
+
 /**
  * Returns a random between min and max (inclusive)
  * source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -221,7 +225,7 @@ function saveScores(cell){
             )
         }
         else{ // not an int
-            toast("Only integers are allowed !", TOAST.ERROR)
+            toastResult(JSON.parse('{"status": "ERROR", "message": "Only integers are allowed !"}'));
             cell.innerText = scores[row][col];
         }
     }
