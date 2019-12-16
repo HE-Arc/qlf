@@ -153,8 +153,28 @@ function parseJsonGameTemplate(json, qlf)
         {
             table += '<td id="cell' + row + col + '" contenteditable="true" onfocusout="saveScores(this)" onfocus="interruptTimer()">' + scores[row][col] + '</td>';
         }
+    }
+    
+    if (template.total){ // if the template has '"total": "true"', display totals at bottom of table
+        
+        // creating the array of all totals
+        total = [];
+        for (let indexC in columns){
+            let tot = 0;
+            for (let indexR in rows){
+                tot += parseInt(scores[indexR][indexC]);
+            }
+            total.push(tot);
+        }
+
+        table += '<tr><th>Total</th>';
+        for (let index in columns){
+            table += '<td id="tot' + index + '"><b>' + total[index] + '</b></td>';
+        }
         table += '</tr>';
     }
+
+    table += '</tr>';
 
     table += '</table>';
 
@@ -184,29 +204,35 @@ function saveScores(cell){
     col = cell.id[cell.id.length-1];
     newVal = cell.innerText;
     scores = JSON.parse(gameObject.scores);
-    if (/^[0-9]+$/.test(String(newVal))){ //if the new input is indeed a number
-        scores[row][col] = cell.innerText;
-        gameObject.scores = JSON.stringify(scores);
-        
-        let gameToJsonify = {
-            name: gameObject.name,
-            scores: gameObject.scores
-        };
+    if (newVal != scores[row][col]){ // if there is really an edit
+        if (/^[0-9]+$/.test(String(newVal))){ //if the new input is indeed a number
+            scores[row][col] = newVal;
+            gameObject.scores = JSON.stringify(scores);
+            
+            let gameToJsonify = {
+                name: gameObject.name,
+                scores: gameObject.scores
+            };
+    
+            submitForm(
+                'api/games/'+String(gameObject.id), 
+                "PATCH", 
+                JSON.stringify(gameToJsonify),
+                (json) => { toastResult(JSON.parse('{"status": "SUCCESS", "message": "Game successfully updated !"}'));}
+            )
+        }
+        else{ // not an int
+            toast("Only integers are allowed !", TOAST.ERROR)
+            cell.innerText = scores[row][col];
+        }
+    }
 
-        submitForm(
-            'api/games/'+String(gameObject.id), 
-            "PATCH", 
-            JSON.stringify(gameToJsonify),
-            (json) => { toastResult(JON.parse('{"status": "SUCCESS", "message": "Game successfully updated !"}'));}
-        )
-    }
-    else{
-        toast("Only integers are allowed !", TOAST.ERROR)
-        cell.innerText = scores[row][col];
-    }
     isTimerPaused = false;
 }
 
+/**
+ * Pause the timer, when a user is editing a score for e.g.
+ */
 function interruptTimer(){
     isTimerPaused = true;
 }
@@ -239,7 +265,7 @@ function displayInfos(infoObject){
 function getTemplates(data, qlf)
 {
     var allTemplates = [];
-    data.forEach(element => {
+    data.data.forEach(element => {
         allTemplates.push([element['id'],element['name']]);
     });
     return allTemplates;

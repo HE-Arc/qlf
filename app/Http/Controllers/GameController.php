@@ -49,16 +49,6 @@ class GameController extends Controller
         return $this->responseSuccess('Game successfully joined !');
     }
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -113,20 +103,7 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
-        $g = Game::findOrFail($game);
-
         return new GameResource($game);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Game $game)
-    {
-        //
     }
 
     /**
@@ -143,16 +120,5 @@ class GameController extends Controller
         $game->save();
 
         return response()->json(['status' => 'SUCCESS', 'message' => 'Game successfully updated']);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Game $game)
-    {
-        //
     }
 }

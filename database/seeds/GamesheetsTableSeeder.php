@@ -46,10 +46,9 @@ class GamesheetsTableSeeder extends Seeder
                     "text": "Final Round",
                     "editable": true
                   }
-                },
-                "created": "2015-05-22T14:56:29.000Z",
-                "updated": "2015-05-22T14:56:28.000Z"
-              }
+                }
+              },
+              "total": true
             }',
             'downloads' => 37,
             'user_id' => 1,
@@ -91,13 +90,12 @@ class GamesheetsTableSeeder extends Seeder
                     "text": "Final Round y",
                     "editable": true
                   }
-                },
-                "created": "2015-05-22T14:56:29.000Z",
-                "updated": "2015-05-22T14:56:28.000Z"
-              }
+                }
+              },
+              "total": false
             }',
             'downloads' => 56,
-            'user_id' => 1,
+            'user_id' => 2,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
