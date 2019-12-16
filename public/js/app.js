@@ -136,7 +136,7 @@ function parseJsonGameTemplate(json, qlf)
     gamesheetCreator = gamesheetObject.created_by;
     
     template = JSON.parse(gamesheetObject.template);
-    columns = template.attributes.column_header;
+    columns = players;
     rows = template.attributes.row_header;
 
     let table = '<table class="responsive-table highlight"><thead><tr><th></th>';
@@ -323,7 +323,7 @@ function callback_updateUsername(json)
     }
 }
 
-// Updates the username in the header after modification
+// Updates the games and close modal
 function callback_updateModalCreate(json)
 {
     if (json['status'] === 'SUCCESS')
@@ -331,13 +331,16 @@ function callback_updateModalCreate(json)
         var Modalelem = document.querySelector('#formCreateGame');
         var instance = M.Modal.getInstance(Modalelem);
         instance.close();
-        var str = 'api/games/';
-        var id = str.concat(json['gameid']);
-        parseJsonGameTemplate(id);
+
+    let urlGames = 'api/getGamesUser'; 
+    let targetGames = document.querySelector('#listGames');
+    let parserGames = displayGamesUser;
+    let replaceGames = 'true';
+    updateContent(urlGames, targetGames, parserGames, replaceGames);
     }
 }
 
-// Updates the username in the header after modification
+// Updates the games and close modal
 function callback_updateModalJoin(json)
 {
     if (json['status'] === 'SUCCESS')
@@ -346,4 +349,9 @@ function callback_updateModalJoin(json)
         var instance = M.Modal.getInstance(Modalelem);
         instance.close();
     }
+    let urlGames = 'api/getGamesUser'; 
+    let targetGames = document.querySelector('#listGames');
+    let parserGames = displayGamesUser;
+    let replaceGames = 'true';
+    updateContent(urlGames, targetGames, parserGames, replaceGames);
 }

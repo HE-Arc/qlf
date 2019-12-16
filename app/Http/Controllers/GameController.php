@@ -101,8 +101,8 @@ class GameController extends Controller
 
         //put the auth in the player list
         $game->users()->attach(Auth::user()->id);
-        //return $this->responseSuccess('Game successfully created !');
-        return response()->json(['status' => 'SUCCESS', 'message' => 'Game successfully created', 'gameid' => $game->id]);
+        
+        return $this->responseSuccess('Game successfully created !');
     }
 
     /**

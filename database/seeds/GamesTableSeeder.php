@@ -13,6 +13,7 @@ class GamesTableSeeder extends Seeder
      */
     public function run()
     {
+        /*
         DB::table('games')->insert(
             [
                 'name' => 'Game1',
@@ -66,5 +67,6 @@ class GamesTableSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]
         );
+        */
     }
 }
