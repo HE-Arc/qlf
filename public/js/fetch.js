@@ -98,6 +98,7 @@ function updateContent(url, target, parser, replace = true, inselect = false, ql
 
             if(inselect === 'true')
             {
+                $(target).empty();
                 $("form input").val("");
                 parsedData.forEach(element => {
                     var $newOpt = $("<option>").attr("value",element[0]).text(element[1])
