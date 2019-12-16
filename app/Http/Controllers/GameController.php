@@ -19,7 +19,7 @@ class GameController extends Controller
         return GameResource::collection(Game::all());
     }
 
-    
+    // get all the games belonging to the user
     public function getGamesUser()
     {
         $games = Game::whereHas('users', function($query){
@@ -48,11 +48,9 @@ class GameController extends Controller
 
         return $this->responseSuccess('Game successfully joined !');
     }
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created game. also add the creator in the game.
      */
     public function store(Request $request)
     { 

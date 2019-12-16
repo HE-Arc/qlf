@@ -43,7 +43,7 @@
     </div>
 
     <!-- Modal Trigger to create a game -->
-    <button id="showModal" class="btn fetch-update" href="api/getGameSheet" data-target="#optionsTemplates" data-parser="getTemplates" data-replace="false" data-inselect="true">Create a game !</button>
+    <button id="showModal" class="btn fetch-update" href="api/gamesheets" data-target="#optionsTemplates" data-parser="getTemplates" data-replace="false" data-inselect="true">Create a game !</button>
 
      <!-- Button to join a game -->
     <button id="showModalJoin" class="btn modal-trigger" data-target="formJoinGame">Join a game !</button>
