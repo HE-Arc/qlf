@@ -33,6 +33,11 @@ Route::group(['middleware' => ['auth:api']], function()
         return $request->user();
     });
 
+    Route::get('/getGamesUser', 'GameController@getGamesUser');
+    
+    Route::apiResource('games', 'GameController');
+
+    Route::post('joinAGame', 'GameController@joinGame');
     // Change username
     Route::post('changeName', 'UserController@changeName');
 

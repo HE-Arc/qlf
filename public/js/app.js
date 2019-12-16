@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () =>
 
     // Inits form select
     var elems = document.querySelectorAll('select');
+
 });
 
 function randomDice(){
@@ -127,8 +128,8 @@ var gameObject;
  */
 function parseJsonGameTemplate(json, qlf)
 {
-    gameObject = json.data;
 
+    gameObject = json.data;
     gameName = gameObject.name;
     scores = JSON.parse(gameObject.scores);
     players = gameObject.players;
@@ -142,7 +143,7 @@ function parseJsonGameTemplate(json, qlf)
     gamesheetCreator = gamesheetObject.created_by;
     
     template = JSON.parse(gamesheetObject.template);
-    columns = template.attributes.column_header;
+    columns = players;
     rows = template.attributes.row_header;
 
     let table = '<table class="responsive-table highlight"><thead><tr><th></th>';
@@ -277,11 +278,29 @@ function getTemplates(data, qlf)
     return allTemplates;
 }
 
+/**
+ * 
+ * Fetch the gamesheets (templates) to put in modal for the creation of a game
+ * 
+ * @param {string} json data, JSON of the gamesheet
+ * @param {bool} qlf false for generic function, true for qlf web app
+ */
+function displayGamesUser(data, qlf)
+{
+    gamesUser = "";
+    data.forEach(element => {
+        gamesUser = gamesUser.concat("<a class='go-to-live collection-item fetch-update' href='api/games/", element['id'] ,"'  data-target='#live-game' data-parser='parseJsonGameTemplate' data-replace='true'>", element['name'], "</a>");
+    });
+    return gamesUser;
+}
+
+// set the onclick on the button to show the model
 document.getElementById('showModal').onclick = function triggerModal() {
     var Modalelem = document.querySelector('.modal');
     var instance = M.Modal.init(Modalelem);
     instance.open();
 }
+
 
 /**
  * Returns time elapsed since a date (param)
@@ -335,4 +354,37 @@ function callback_updateUsername(json)
 
         headerUsername.innerHTML = usernameInput.value;
     }
+}
+
+// Updates the games and close modal
+function callback_updateModalCreate(json)
+{
+    if (json['status'] === 'SUCCESS')
+    {
+        var Modalelem = document.querySelector('#formCreateGame');
+        var instance = M.Modal.getInstance(Modalelem);
+        instance.close();
+
+    let urlGames = 'api/getGamesUser'; 
+    let targetGames = document.querySelector('#listGames');
+    let parserGames = displayGamesUser;
+    let replaceGames = 'true';
+    updateContent(urlGames, targetGames, parserGames, replaceGames);
+    }
+}
+
+// Updates the games and close modal
+function callback_updateModalJoin(json)
+{
+    if (json['status'] === 'SUCCESS')
+    {
+        var Modalelem = document.querySelector('#formJoinGame');
+        var instance = M.Modal.getInstance(Modalelem);
+        instance.close();
+    }
+    let urlGames = 'api/getGamesUser'; 
+    let targetGames = document.querySelector('#listGames');
+    let parserGames = displayGamesUser;
+    let replaceGames = 'true';
+    updateContent(urlGames, targetGames, parserGames, replaceGames);
 }

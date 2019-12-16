@@ -1,4 +1,7 @@
 
+// Initialize the var intervall so we can start and stop it
+var interval = null;
+
 // Fetch API not available
 if (!window.fetch)
 {
@@ -56,7 +59,7 @@ function submitForm(url, method, data, callback)
             'X-CSRF-TOKEN': getCsrfToken(),
         },
     };
-
+    
     fetch(url, options)
         .then((response) =>
         {
@@ -215,13 +218,22 @@ document.addEventListener('click', (evt) =>
 
         updateContent(url, target, parser, replace, inselect, true);
 
-        if (evt.target.classList.contains('fetch-sync'))
+        // "go-to-live" define the list of games of a user. When we click on it,
+        // we need to stop the interval if exists, start a new one and go to live
+        if (evt.target.classList.contains('go-to-live'))
         {
-            setInterval(async function(){
+            if (typeof interval !== 'undefined') 
+            {
+                window.clearInterval(interval);
+            }
+            interval = setInterval(async function(){
                 if(!isTimerPaused){
                     updateContent(url, target, parser, replace, inselect, false);
                 }
             }, 5000);
+            const tabsSwipe = document.querySelector('#app-tabs-swipe');
+            var instance = M.Tabs.getInstance(tabsSwipe);
+            instance.select('tab-live');
         }
     }
 });
@@ -259,13 +271,19 @@ document.addEventListener('submit', (evt) =>
     }
 });
 
+
 // On load, fetch data for market tab, user tab, ...
 document.addEventListener('DOMContentLoaded', () =>
 {
+    let urlGames = 'api/getGamesUser'; 
+    let targetGames = document.querySelector('#listGames');
+    let parserGames = displayGamesUser;
+    let replaceGames = 'true';
+    updateContent(urlGames, targetGames, parserGames, replaceGames);
+
     let urlMarket = 'api/gamesheets';
     let target = document.querySelector('#market-gamesheets');
     let parser = parseJsonMarketTemplate;
     let replace = 'true';
-
     updateContent(urlMarket, target, parser, replace);
 });

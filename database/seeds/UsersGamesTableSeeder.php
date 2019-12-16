@@ -13,6 +13,7 @@ class UsersGamesTableSeeder extends Seeder
      */
     public function run()
     {
+        /*
         DB::table('game_user')->insert([
             'user_id' => 1,
             'game_id' => 1,
@@ -49,5 +50,6 @@ class UsersGamesTableSeeder extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
+        */
     }
 }

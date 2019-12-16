@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Game;
 use Illuminate\Http\Request;
 use App\Http\Resources\Game as GameResource;
+use Auth;
 
 class GameController extends Controller
 {
@@ -18,23 +19,78 @@ class GameController extends Controller
         return GameResource::collection(Game::all());
     }
 
+    // get all the games belonging to the user
+    public function getGamesUser()
+    {
+        $games = Game::whereHas('users', function($query){
+            $query->where('user_id',  Auth::user()->id);
+        })
+        ->get();
+        
+        return $games;
+    }
+
+    public function joinGame(Request $request)
+    {
+        // Validation
+        $validator = $this->validateJson($request, [
+            'nameJoinGame' => 'required',
+        ]);
+
+        // Validation fails
+        if ($validator->fails())
+        {
+            return $this->responseError($validator);
+        }
+        $game = Game::where('name', $request->json('nameJoinGame'))->first();
+        $game->users()->attach(Auth::user()->id);
+
+
+        return $this->responseSuccess('Game successfully joined !');
+    }
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created game. also add the creator in the game.
      */
     public function store(Request $request)
-    {
-        $game = new Game;
-        $game->name = $request->nameGame;
-        $game->user_id = auth()->user()->id;
-        $game->gamesheet_id = $request->templateChoosen;
-        $game->scores = "{}";
+    { 
+        // Validation
+        $validator = $this->validateJson($request, [
+            'nameGame' => 'required',
+        ]);
 
+        // Validation fails
+        if ($validator->fails())
+        {
+            return $this->responseError($validator);
+        }
+        $game = new Game;
+        $game->name = $request->json('nameGame');
+        $game->user_id = auth()->user()->id;
+        $game->gamesheet_id = $request->json('templateChoosen');
+        $game->scores = '{
+            "0": {
+                "0": 17,
+                "1": 7,
+                "2": 2
+            },
+            "1": {
+                "0": 53,
+                "1": 22,
+                "2": 33
+            },
+            "2": {
+                "0": 22,
+                "1": 101,
+                "2": 102
+            }
+        }';
         $game->save();
 
-        return view('home');
+        //put the auth in the player list
+        $game->users()->attach(Auth::user()->id);
+        
+        return $this->responseSuccess('Game successfully created !');
     }
 
     /**
