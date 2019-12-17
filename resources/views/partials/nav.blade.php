@@ -17,7 +17,7 @@
                         </li>
                     @endguest
                     <li>
-                        <a onclick="randomDice()"><i class="material-icons">crop_square</i></a>
+                        <a onclick="randomDice()"><i class="material-icons">exposure_plus_1</i></a>
                     </li>
                     <li>
                         <a class='dropdown-trigger' href='#' data-target='header-dropdown'><i class="material-icons">menu</i></a>
