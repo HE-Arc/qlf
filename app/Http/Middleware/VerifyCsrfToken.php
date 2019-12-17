@@ -19,7 +19,11 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
+<<<<<<< HEAD
         // if you have some issues with loging out local env, you should uncomment this line with your own server path:
         //'http://127.0.0.1:8000/qlf/public/'
+=======
+        //
+>>>>>>> master
     ];
 }
