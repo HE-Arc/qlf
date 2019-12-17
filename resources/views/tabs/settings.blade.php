@@ -1,14 +1,14 @@
 
 <div class="carousel-item" id="tab-settings">
-    <h2 class="center">Settings</h2>
+    <h1 class="title">Settings</h1>
 
     <!-- EMAIL -->
 
     <section class="section">
-        <h3 class="section-title">Email</h3>
+        <h2 class="sub-title">Email</h2>
         <div class="row">
             <div class="input-field col s12">
-                <i class="material-icons prefix">verified_user</i>
+                <i class="material-icons prefix">mail</i>
                 <input disabled value="{{ Auth::user()->email }}" id="user-email" type="text">
             </div>
         </div>
@@ -17,7 +17,7 @@
     <!-- NAME -->
 
     <section class="section">
-        <h3 class="section-title">Username</h3>
+        <h2 class="sub-title">Username</h2>
         <form class="fetch-submit" action="api/changeName" method="POST" data-callback="callback_updateUsername">
             <div class="row">
                 <div class="input-field col s12">
@@ -35,7 +35,7 @@
     <!-- PASSWORD -->
 
     <section class="section">
-        <h3 class="section-title">Password</h3>
+        <h2 class="sub-title">Password</h2>
         <form class="fetch-submit" action="api/changePassword" method="POST" data-clear="true">
             <div class="row">
                 <div class="input-field col s12">

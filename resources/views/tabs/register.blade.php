@@ -1,11 +1,11 @@
 <div class="carousel-item" id="tab-register">
     <section class="section">
-        <h3 class="section-title">Sign in</h3>
+        <h1 class="title">Sign in</h1>
         <form id="form-signin" method="POST" action="{{ route('register') }}">
             @csrf
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">account_box</i>
+                    <i class="material-icons prefix">mail</i>
                     <input id="sign-email" type="email" class="validate @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                     <label for="sign-email">Email</label>
                     @error('email')
@@ -41,7 +41,7 @@
                     <input id="sign-pw-confirm" type="password" class="validate" name="password_confirmation" required autocomplete="new-password">
                     <label for="sign-pw-confirm">Confirm password</label>
                 </div>
-                
+
                 <button class="btn pink waves-effect" type="submit" name="action">SIGN IN
                     <i class="material-icons right">send</i>
                 </button>

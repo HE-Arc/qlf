@@ -26,7 +26,13 @@
         @stack('headScripts')
 
     </head>
-    <body>
+
+    @auth
+    <body class="app-auth">
+    @endauth
+    @guest
+    <body class="app-guest">
+    @endguest
 
         <!-- navigation bar -->
         @include('partials.nav')

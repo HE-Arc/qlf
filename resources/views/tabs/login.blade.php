@@ -1,12 +1,12 @@
 
 <div class="carousel-item" id="tab-login">
     <section class="section">
-        <h3 class="section-title">Log in</h3>
+        <h1 class="title">Log in</h1>
         <form id="form-login" method="POST" action="{{ route('login') }}">
             @csrf
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">account_box</i>
+                    <i class="material-icons prefix">mail</i>
                     <input id="login-email" type="email" class="validate @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                     <label for="login-email">Email</label>
                     @error('email')
@@ -26,7 +26,7 @@
                     @enderror
                 </div>
 
-                {{-- 
+                {{--
                     <div class="form-group row">
                         <div class="col-md-6 offset-md-4">
                             <div class="form-check">
@@ -44,7 +44,7 @@
                         </a>
                     @endif
                 --}}
-               
+
 
                 <button class="btn pink waves-effect" type="submit" name="action">LOG IN
                     <i class="material-icons right">send</i>

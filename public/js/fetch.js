@@ -59,7 +59,7 @@ function submitForm(url, method, data, callback)
             'X-CSRF-TOKEN': getCsrfToken(),
         },
     };
-    
+
     fetch(url, options)
         .then((response) =>
         {
@@ -222,7 +222,7 @@ document.addEventListener('click', (evt) =>
         // we need to stop the interval if exists, start a new one and go to live
         if (evt.target.classList.contains('go-to-live'))
         {
-            if (typeof interval !== 'undefined') 
+            if (typeof interval !== 'undefined')
             {
                 window.clearInterval(interval);
             }
@@ -269,21 +269,4 @@ document.addEventListener('submit', (evt) =>
             }
         });
     }
-});
-
-
-// On load, fetch data for market tab, user tab, ...
-document.addEventListener('DOMContentLoaded', () =>
-{
-    let urlGames = 'api/getGamesUser'; 
-    let targetGames = document.querySelector('#listGames');
-    let parserGames = displayGamesUser;
-    let replaceGames = 'true';
-    updateContent(urlGames, targetGames, parserGames, replaceGames);
-
-    let urlMarket = 'api/gamesheets';
-    let target = document.querySelector('#market-gamesheets');
-    let parser = parseJsonMarketTemplate;
-    let replace = 'true';
-    updateContent(urlMarket, target, parser, replace);
 });
