@@ -49,7 +49,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .footer .tabs .tab a:hover {
     background: #26a69a;

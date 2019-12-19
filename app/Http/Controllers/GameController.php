@@ -67,7 +67,7 @@ class GameController extends Controller
         $scores = json_decode($game->scores);
 
         foreach ($scores as &$row){
-            $row->{$nbrPlayers-1} = "-";
+            $row->{$nbrPlayers-1} = "";
         }
 
         $newScores = json_encode($scores);
@@ -98,7 +98,7 @@ class GameController extends Controller
         $game->name = $request->json('nameGame');
         $game->user_id = auth()->user()->id;
         $game->gamesheet_id = $request->json('templateChoosen');
-        $game->scores = '{"0": {"0": "-"}, "1": {"0": "-"},"2": {"0": "-"}}';
+        $game->scores = '{"0": {"0": ""}, "1": {"0": ""},"2": {"0": ""}}';
         $game->save();
 
         //put the auth in the player list
