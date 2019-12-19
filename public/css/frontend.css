@@ -100,3 +100,8 @@ body {
 #tab-games #section-games-actions .btn {
     margin: 0 10px;
 }
+@media(max-width: 768px) {
+    #tab-games #section-games-actions .btn {
+        margin: 5px 0;
+    }
+}
