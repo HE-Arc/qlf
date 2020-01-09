@@ -54,5 +54,24 @@ class LoginController extends Controller
             ->cookie($this->forgetApiTokenCookie());
     }
 
+    // Login via REST and not HTTP
+    public function restLogin()
+    {
+        // Successful login
+        if (Auth::attempt(['email' => request('email'), 'password' => request('password')]))
+        {
+            return $this->responseSuccess('Successfully logged in !', [
+                'token' => $this->getApiToken(),
+            ]);
+        }
 
+        return $this->responseError('Log in failed...');
+    }
+
+    public function test()
+    {
+        return $this->responseSuccess('Yuhu !', [
+            'token' => $this->getApiToken(),
+        ]);
+    }
 }

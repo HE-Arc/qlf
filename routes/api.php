@@ -22,12 +22,9 @@ use App\Game;
 |
 */
 
-Route::get('android', function()
-{
-    return response()->json([
-        'message' => 'Working !',
-    ]);
-});
+Route::get('android', 'LoginController@test');
+
+Route::post('restLogin', 'LoginController@restLogin');
 
 // API authenticating protected routes
 Route::group(['middleware' => ['auth:api']], function()

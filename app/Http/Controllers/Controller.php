@@ -16,13 +16,19 @@ class Controller extends BaseController
 
     const COOKIE_API_TOKEN_NAME = '_api_token';
 
+    // Returns an API token based on the current user
+    protected function getApiToken()
+    {
+        return $user->createToken('qlf')->accessToken;
+    }
+
     // Returns an API token cookie based on the current user
     protected function getApiTokenCookie()
     {
         $user = Auth::user();
 
         // Creates the _api_token cookie
-        $token = $user->createToken('qlf')->accessToken;
+        $token = $this->getApiToken();
         $cookie = $this->getCookieDetails($token);
 
         return \Cookie::make($cookie['name'],
