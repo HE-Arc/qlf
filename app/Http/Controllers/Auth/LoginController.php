@@ -71,7 +71,8 @@ class LoginController extends Controller
     public function test()
     {
         return $this->responseSuccess('Yuhu !', [
-            'token' => $this->getApiToken(),
+            'status' => 'SUCCESS',
+            'token' => 'API TOKEN',
         ]);
     }
 }
