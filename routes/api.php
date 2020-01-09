@@ -22,6 +22,13 @@ use App\Game;
 |
 */
 
+Route::get('android', function()
+{
+    return response()->json([
+        'message' => 'Working !',
+    ]);
+});
+
 // API authenticating protected routes
 Route::group(['middleware' => ['auth:api']], function()
 {
