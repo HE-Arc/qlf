@@ -25,6 +25,9 @@ use App\Game;
 // Android login
 Route::post('restLogin', 'Auth\LoginController@restLogin');
 
+// Android logout
+Route::post('restLogout', 'Auth\LoginController@restLogout');
+
 // API authenticating protected routes
 Route::group(['middleware' => ['auth:api']], function()
 {
@@ -67,7 +70,4 @@ Route::group(['middleware' => ['auth:api']], function()
     Route::apiResource('gamesheets', 'GamesheetController', [
         'only' => ['index', 'show']
     ]);
-
-    // Android logout
-    Route::post('restLogout', 'Auth\LoginController@restLogout');
 });
