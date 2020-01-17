@@ -68,11 +68,11 @@ class LoginController extends Controller
         return $this->responseError('Log in failed...');
     }
 
-    public function test()
+    // Logout via REST and not HTTP
+    public function restLogout()
     {
-        return $this->responseSuccess('Yuhu !', [
-            'status' => 'SUCCESS',
-            'token' => 'API TOKEN',
-        ]);
+        Auth::logout();
+
+        return $this->responseSuccess('Successfully logged out !');
     }
 }
